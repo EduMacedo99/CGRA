@@ -20,20 +20,11 @@ class MyScene extends CGFscene {
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
 
-        this.bark = new CGFappearance(this);
-        this.bark.setAmbient(1, 1, 1, 1);
-        this.bark.setDiffuse(1, 1, 1, 1);
-        this.bark.setSpecular(0.1, 0.1, 0.1, 1);
-        this.bark.setShininess(50.0);
-        this.bark.loadTexture('textures/bark.jpg');
-        this.bark.setTextureWrap('REPEAT', 'REPEAT');
-
-
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.prism = new MyPrism(this, 20, 1, 2);
         this.cylinder = new MyCylinder(this, 10, 5, 1);
-        this.tree = new MyTree(this, 10, 1, 2, 0.8, 1.2);
+        this.tree = new MyTree(this, 10, 2.5, 0.6, 0.7, 3);
         this.cone = new MyCone(this, 5, 1, 0.5);
 
         //Objects connected to MyInterface
@@ -86,9 +77,9 @@ class MyScene extends CGFscene {
           this.tree.disableNormalViz();
         }
         //this.prism.display();
-        this.bark.apply();
-        this.cylinder.display();
-        //this.tree.display();
+        // this.bark.apply();
+        // this.cylinder.display();
+        this.tree.display();
 
         // ---- END Primitive drawing section
     }
