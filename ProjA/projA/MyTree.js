@@ -4,11 +4,14 @@
  * @param scene - Reference to MyScene object
  */
 class MyTree extends CGFobject {
-	constructor(scene, slices, height = 2, radius = 0.5, topTrunkHeightRatio = 1, topTrunkRadiusRatio = 1.5) {
+	constructor(scene, slices, height = 2, radius = 0.5, topTrunkHeightRatio = 1, topTrunkRadiusRatio = 1.5, x = 0, y = 0, z = 0) {
     super(scene);
 
     this.height = height*topTrunkHeightRatio;
     this.normals = []; 
+    this.x = x;
+    this.y = y;
+    this.z = z;
 
     this.cone = new MyCone(this.scene, slices,  height*(1/topTrunkHeightRatio), radius*topTrunkRadiusRatio);
     this.cylinder = new MyCylinder(this.scene, slices, height*topTrunkHeightRatio, radius);
@@ -31,10 +34,10 @@ class MyTree extends CGFobject {
     this.leaves.loadTexture('textures/pine.jpg');
     this.leaves.setTextureWrap('REPEAT', 'REPEAT');
 
-
   }
 display(){
     
+    this.scene.translate(this.x, this.y, this.z);
     this.scene.pushMatrix();
     this.scene.translate(0, this.height, 0);
     this.leaves.apply();
@@ -42,8 +45,10 @@ display(){
     this.scene.rotate(Math.PI, 1, 0, 0);
     this.circle.display();
     this.scene.popMatrix();
+
     this.bark.apply();
     this.cylinder.display();
+    this.scene.translate(-this.x, -this.y, -this.z);
 
   }
   enableNormalViz(){
