@@ -21,22 +21,24 @@ class MyCylinder extends CGFobject {
         var max = this.slices*2;
 
 
-        for (var i = 0; i < max; i+=2){
-          this.indices.push(i+1, i, i+2);
-          this.indices.push(i+2, i+3, i+1);
-        }
 
-        for(var i = 0; i <= this.slices; i++){
+        for(var i = 0; i < max; i+=2){
 
           this.vertices.push(Math.cos(ang)*this.radius, 0, -Math.sin(ang)*this.radius);
           this.vertices.push(Math.cos(ang)*this.radius, this.height, -Math.sin(ang)*this.radius);
+          this.indices.push(i % max, (i+2) % max, (i+1) % max);
+          this.indices.push((i+1) % max, (i+2) % max, (i+3) % max);
           this.normals.push(Math.cos(ang), 0, -Math.sin(ang));
           this.normals.push(Math.cos(ang), 0, -Math.sin(ang));
-          
-          this.texCoords.push(i/this.slices, 1);
-          this.texCoords.push(i/this.slices, 0);
+          this.texCoords.push(i/max, 0);
+          this.texCoords.push(i/max, 1);
           ang+=alphaAng;
         }
+        
+        this.vertices.push(Math.cos(alphaAng)*this.radius, 0, -Math.sin(alphaAng)*this.radius);
+        this.vertices.push(Math.cos(alphaAng)*this.radius, this.height, -Math.sin(alphaAng)*this.radius);
+        this.texCoords.push(max, 0);
+        this.texCoords.push(max, 1);
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();

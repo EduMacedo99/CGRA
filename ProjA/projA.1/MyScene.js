@@ -10,7 +10,6 @@ class MyScene extends CGFscene {
         super.init(application);
         this.initCameras();
         this.initLights();
-        this.enableTextures(true);
 
         //Background color
         this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -21,10 +20,10 @@ class MyScene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.bark = new CGFappearance(this);
-        this.bark.setAmbient(1, 1, 1, 1);
-        this.bark.setDiffuse(1, 1, 1, 1);
+        this.bark.setAmbient(0.1, 0.1, 0.1, 1);
+        this.bark.setDiffuse(0.9, 0.9, 0.9, 1);
         this.bark.setSpecular(0.1, 0.1, 0.1, 1);
-        this.bark.setShininess(50.0);
+        this.bark.setShininess(10.0);
         this.bark.loadTexture('textures/bark.jpg');
         this.bark.setTextureWrap('REPEAT', 'REPEAT');
 
@@ -32,7 +31,7 @@ class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.prism = new MyPrism(this, 20, 1, 2);
-        this.cylinder = new MyCylinder(this, 10, 5, 1);
+        this.cylinder = new MyCylinder(this, 5, 5, 1);
         this.tree = new MyTree(this, 10, 1, 2, 0.8, 1.2);
         this.cone = new MyCone(this, 5, 1, 0.5);
 
