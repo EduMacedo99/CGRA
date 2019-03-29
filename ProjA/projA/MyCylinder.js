@@ -33,10 +33,20 @@ class MyCylinder extends CGFobject {
           this.normals.push(Math.cos(ang), 0, -Math.sin(ang));
           this.normals.push(Math.cos(ang), 0, -Math.sin(ang));
           
-          this.texCoords.push(i/this.slices, 1);
-          this.texCoords.push(i/this.slices, 0);
           ang+=alphaAng;
         }
+
+        for (var i = 0; i < (this.slices)/2; i++){
+          this.texCoords.push(i/(this.slices/2), 1);
+          this.texCoords.push(i/(this.slices/2), 0);
+        }
+        for (var i = this.slices/2; i > 0; i--){
+          this.texCoords.push(i/(this.slices/2), 1);
+          this.texCoords.push(i/(this.slices/2), 0);
+        }
+        this.texCoords.push(0, 1);
+        this.texCoords.push(0, 0);
+
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();

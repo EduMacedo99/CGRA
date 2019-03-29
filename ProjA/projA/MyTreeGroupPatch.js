@@ -8,35 +8,42 @@ class MyTreeGroupPatch extends CGFobject {
         this.normals = [];
         this.n_trees = n_trees_in_file*n_trees_in_file; 
         this.trees = [];
-        
+
+        var height = 0;
+        var radius = 0;
+        var heightRatio = 0;
+        var radiusRatio = 0;
+        var x = 0;
+        var z = 0;
+
         for(var i = 0; i < n_trees_in_file; i++){
           for(var j = 0; j < n_trees_in_file; j++){
             var random = Math.random();
   
-            var height = max_tree_height - 0.2*(random % 9);
-            var radius = block_width/2 - ((random >> 12) % 10)/ block_width;
-            var heightRatio = 0.5 + 0.05*((random >> 6) % 9);
-            var radiusRatio = 2.5 + 0.1 * ((random >> 3) % 11);
-
-            var x = x_init + i * block_width + radius + ((random >> 5) % 15)/(block_width/2 - radius);
-            var z = z_init + j * block_width + radius + ((random >> 10) % 15)/(block_width/2 - radius);
+            heightRatio = 0.5 + 0.05*((random * 1000000) % 9);
+            radiusRatio = 2.5 + 0.1 * ((random * 100000) % 5);
+            height = max_tree_height - 0.2*((random * 10000) % 7);
+            radius = block_width/(2.01*radiusRatio) - ((random * 10) % 7)/ (block_width*radiusRatio);
+            x = x_init + i * block_width + radius*radiusRatio + (block_width/2 - radius*radiusRatio)/(((random * 100) % 9) + 1); //avoid dividing by 0
+            z = z_init + j * block_width + radius*radiusRatio + (block_width/2 - radius*radiusRatio)/(((random * 1000) % 9) + 1);
             
             this.trees.push(new MyTree(this.scene, 10, height, radius, heightRatio, radiusRatio, x, 0, z));
           }
-        }
+        }    
 
     }
     display(){
-      for(var i = 0; i < this.n_trees; i++)
+      for(var i = 0; i < this.n_trees; i++){
         this.trees[i].display();
+      }
     }
     enableNormalViz(){
       for(var i = 0; i < this.n_trees; i++)
-      this.trees[i].enableNormalViz();
+        this.trees[i].enableNormalViz();
     }
     disableNormalViz(){
       for(var i = 0; i < this.n_trees; i++)
-      this.trees[i].disableNormalViz();
+        this.trees[i].disableNormalViz();
     }
   
 }

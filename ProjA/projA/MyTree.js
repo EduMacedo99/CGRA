@@ -13,9 +13,9 @@ class MyTree extends CGFobject {
     this.y = y;
     this.z = z;
 
-    this.cone = new MyCone(this.scene, slices,  height*(1/topTrunkHeightRatio), radius*topTrunkRadiusRatio);
-    this.cylinder = new MyCylinder(this.scene, slices, height*topTrunkHeightRatio, radius);
-    this.circle = new MyCircle(this.scene, slices, radius*topTrunkRadiusRatio);
+    this.coneOut = new MyCone(this.scene, slices, false,  height*(1/topTrunkHeightRatio), radius*topTrunkRadiusRatio);
+    this.cylinder = new MyCylinder(this.scene, slices, 6*height*topTrunkHeightRatio/4, radius);
+    this.coneIn = new MyCone(this.scene, slices, true,  height*(1/topTrunkHeightRatio)/4, radius*topTrunkRadiusRatio);
 
     this.bark = new CGFappearance(this.scene);
     this.bark.setAmbient(1, 1, 1, 1);
@@ -41,9 +41,8 @@ display(){
     this.scene.pushMatrix();
     this.scene.translate(0, this.height, 0);
     this.leaves.apply();
-    this.cone.display();
-    this.scene.rotate(Math.PI, 1, 0, 0);
-    this.circle.display();
+    this.coneOut.display();
+    this.coneIn.display();
     this.scene.popMatrix();
 
     this.bark.apply();
@@ -52,14 +51,14 @@ display(){
 
   }
   enableNormalViz(){
-    this.cone.enableNormalViz();
+    this.coneOut.enableNormalViz();
     this.cylinder.enableNormalViz();
-    this.circle.enableNormalViz();
+    this.coneIn.enableNormalViz();
   }
   disableNormalViz(){
-    this.cone.disableNormalViz();
+    this.coneOut.disableNormalViz();
     this.cylinder.disableNormalViz();
-    this.circle.disableNormalViz();
+    this.coneIn.disableNormalViz();
   }
 } 
 

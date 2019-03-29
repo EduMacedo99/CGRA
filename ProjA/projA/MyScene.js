@@ -26,11 +26,21 @@ class MyScene extends CGFscene {
         this.cylinder = new MyCylinder(this, 10, 5, 1);
         this.tree = new MyTree(this, 10, 2.5, 0.6, 0.7, 3);
         this.cone = new MyCone(this, 5, 1, 0.5);
-        this.treeGroupPatch = new MyTreeGroupPatch(this, 3, 3, 3, 0, 0);
+        this.treeGroupPatch = new MyTreeGroupPatch(this, 3, 5, 3, 0, 0);
+        this.plane = new MyQuad(this);
 
         //Objects connected to MyInterface
         this.displayNormals = false;
 
+        //Materials
+        this.grass = new CGFappearance(this);
+        this.grass.setAmbient(0.5, 0.5, 0.5, 1);
+        this.grass.setDiffuse(1, 1, 1, 1);
+        this.grass.setSpecular(0, 0, 0, 1);
+        this.grass.setShininess(10.0);
+        this.grass.loadTexture('textures/grass.jpg');
+        this.grass.setTextureWrap('REPEAT', 'REPEAT');
+      
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -39,7 +49,7 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(25, 50, 25), vec3.fromValues(5, 0, 5));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -70,17 +80,28 @@ class MyScene extends CGFscene {
           this.cylinder.enableNormalViz();
           this.prism.enableNormalViz();
           this.tree.enableNormalViz();
+          this.treeGroupPatch.enableNormalViz();
         }
         else
         {
           this.cylinder.disableNormalViz();
           this.prism.disableNormalViz();
           this.tree.disableNormalViz();
+          this.treeGroupPatch.disableNormalViz();
         }
         //this.prism.display();
         // this.bark.apply();
         // this.cylinder.display();
         // this.tree.display();
+        this.pushMatrix();
+        this.scale(15, 1, 15);
+        this.translate(0.5, 0, 0.5);
+        this.rotate(-Math.PI/2, 1, 0, 0);
+        this.grass.apply();
+        this.plane.display();
+        this.popMatrix();
+
+
         this.treeGroupPatch.display();
 
         // ---- END Primitive drawing section

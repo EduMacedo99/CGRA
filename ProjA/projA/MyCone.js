@@ -3,14 +3,14 @@
 * @constructor
 */
 class MyCone extends CGFobject {
-    constructor(scene, slices, height = 1, radius = 0.5) {
+    constructor(scene, slices, inverted = false, height = 1, radius = 0.5) {
         super(scene);
         this.slices = slices;
         this.height = height;
         this.radius = radius;
-        this.initBuffers();
+        this.initBuffers(inverted);
     }
-    initBuffers() {
+    initBuffers(inverted = false) {
         this.vertices = [];
         this.indices = [];
         this.normals = [];
@@ -22,13 +22,22 @@ class MyCone extends CGFobject {
         for(var i = 0; i < this.slices; i++){
 
             this.vertices.push(Math.cos(ang)*this.radius, 0, -Math.sin(ang)*this.radius);
-            this.indices.push(i, (i+1) % this.slices, this.slices);
-            this.normals.push(Math.cos(ang), Math.cos(Math.PI/4.0), -Math.sin(ang));
+            if(inverted){
+              this.indices.push((i+1) % this.slices, i, this.slices);
+              this.normals.push(-Math.cos(ang), -Math.cos(Math.PI/4.0), Math.sin(ang));
+            }
+            else{
+              this.indices.push(i, (i+1) % this.slices, this.slices);
+              this.normals.push(Math.cos(ang), Math.cos(Math.PI/4.0), -Math.sin(ang));
+            }
             this.texCoords.push(0.5 + Math.cos(ang)*0.5, 0.5 - Math.sin(ang)*0.5);
             ang+=alphaAng;
         }
         this.vertices.push(0,this.height,0);
-        this.normals.push(0,this.height,0);
+        if(inverted)
+          this.normals.push(0,-this.height,0);
+        else
+          this.normals.push(0,this.height,0);
         this.texCoords.push(0.5, 0.5);
 
 
