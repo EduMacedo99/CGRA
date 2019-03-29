@@ -28,6 +28,7 @@ class MyScene extends CGFscene {
         this.cone = new MyCone(this, 5, 1, 0.5);
         this.treeGroupPatch = new MyTreeGroupPatch(this, 3, 5, 3, 0, 0);
         this.plane = new MyQuad(this);
+        this.treerow = new MyTreeRow(this, 6, 3, 0, 0);
 
         //Objects connected to MyInterface
         this.displayNormals = false;
@@ -81,6 +82,7 @@ class MyScene extends CGFscene {
           this.prism.enableNormalViz();
           this.tree.enableNormalViz();
           this.treeGroupPatch.enableNormalViz();
+          this.treerow.enableNormalViz();
         }
         else
         {
@@ -88,6 +90,7 @@ class MyScene extends CGFscene {
           this.prism.disableNormalViz();
           this.tree.disableNormalViz();
           this.treeGroupPatch.disableNormalViz();
+          this.treerow.disableNormalViz();
         }
         //this.prism.display();
         // this.bark.apply();
@@ -99,10 +102,19 @@ class MyScene extends CGFscene {
         this.rotate(-Math.PI/2, 1, 0, 0);
         this.grass.apply();
         this.plane.display();
+        //
+        this.translate(1, 0, 0);
+        this.plane.display();
+        this.translate(0, 1,0);
+        this.plane.display();
+        this.translate(-1,0,0);
+        this.plane.display();
+        //
         this.popMatrix();
 
 
-        this.treeGroupPatch.display();
+        //this.treeGroupPatch.display();
+        this.treerow.display();
 
         // ---- END Primitive drawing section
     }
