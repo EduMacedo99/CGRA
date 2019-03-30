@@ -21,7 +21,7 @@ class MyTreeGroupPatch extends CGFobject {
             var random = Math.random();
   
             heightRatio = 0.5 + 0.05*((random * 1000000) % 9);
-            radiusRatio = 2.5 + 0.1 * ((random * 100000) % 5);
+            radiusRatio = 2 + 0.1 * ((random * 100000) % 11);
             height = max_tree_height - 0.2*((random * 10000) % 7);
             radius = block_width/(2.01*radiusRatio) - ((random * 10) % 7)/ (block_width*radiusRatio);
             x = x_init + i * block_width + radius*radiusRatio + (block_width/2 - radius*radiusRatio)/(((random * 100) % 9) + 1); //avoid dividing by 0

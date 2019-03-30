@@ -22,16 +22,26 @@ class MyScene extends CGFscene {
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.prism = new MyPrism(this, 20, 1, 2);
+        this.pyramid = new MyPyramid(this, 4, 5, 2);
+        this.prism = new MyPrism(this, 5, 5, 2);
         this.cylinder = new MyCylinder(this, 10, 5, 1);
         this.tree = new MyTree(this, 10, 2.5, 0.6, 0.7, 3);
-        this.cone = new MyCone(this, 5, 1, 0.5);
+        this.cone = new MyCone(this, 10, false, 5, 2);
         this.treeGroupPatch = new MyTreeGroupPatch(this, 3, 5, 3, 0, 0);
+        this.treeRow = new MyTreeRow(this, 5, 5, 3, 0, 0);
         this.plane = new MyQuad(this);
-        this.treerow = new MyTreeRow(this, 6, 3, 0, 0);
 
         //Objects connected to MyInterface
+        this.displayAxis = true;
         this.displayNormals = false;
+        this.displayGrass = true;
+        this.selectedObject = 5;
+        this.objects = [this.pyramid, this.prism, this.cone, this.cylinder, this.tree, this.treeRow, this.treeGroupPatch];
+
+        // Labels and ID's for object selection on MyInterface
+        this.objectIDs = { 'Pyramid': 0, 'Prism': 1, 'Cone': 2, 'Cylinder': 3, 'Tree': 4, 'Tree Row': 5, 'Tree Group Patch': 6 };
+        
+
 
         //Materials
         this.grass = new CGFappearance(this);
@@ -70,51 +80,39 @@ class MyScene extends CGFscene {
         this.applyViewMatrix();
 
         // Draw axis
-        this.axis.display();
+        if (this.displayAxis)
+            this.axis.display();
 
         //Apply default appearance
         this.setDefaultAppearance();
 
         // ---- BEGIN Primitive drawing section
         if (this.displayNormals)
-        {
-          this.cylinder.enableNormalViz();
-          this.prism.enableNormalViz();
-          this.tree.enableNormalViz();
-          this.treeGroupPatch.enableNormalViz();
-          this.treerow.enableNormalViz();
-        }
+            this.objects[this.selectedObject].enableNormalViz();
         else
-        {
-          this.cylinder.disableNormalViz();
-          this.prism.disableNormalViz();
-          this.tree.disableNormalViz();
-          this.treeGroupPatch.disableNormalViz();
-          this.treerow.disableNormalViz();
+            this.objects[this.selectedObject].disableNormalViz();
+
+        this.objects[this.selectedObject].display();
+
+        if(this.displayGrass){
+          this.pushMatrix();
+          this.scale(25, 1, 25);
+          this.rotate(-Math.PI/2, 1, 0, 0);
+          this.translate(-0.5, -0.5, 0);
+          this.grass.apply();
+          this.plane.display();
+          //
+          this.translate(1, 0, 0);
+          this.plane.display();
+          this.translate(0, 1, 0);
+          this.plane.display();
+          this.translate(-1, 0, 0);
+          this.plane.display();
+          //
+          this.popMatrix();
         }
-        //this.prism.display();
-        // this.bark.apply();
-        // this.cylinder.display();
-        // this.tree.display();
-        this.pushMatrix();
-        this.scale(15, 1, 15);
-        this.translate(0.5, 0, 0.5);
-        this.rotate(-Math.PI/2, 1, 0, 0);
-        this.grass.apply();
-        this.plane.display();
-        //
-        this.translate(1, 0, 0);
-        this.plane.display();
-        this.translate(0, 1,0);
-        this.plane.display();
-        this.translate(-1,0,0);
-        this.plane.display();
-        //
-        this.popMatrix();
 
 
-        //this.treeGroupPatch.display();
-        this.treerow.display();
 
         // ---- END Primitive drawing section
     }
