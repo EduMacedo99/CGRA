@@ -29,6 +29,8 @@ class MyScene extends CGFscene {
         this.treeGroupPatch = new MyTreeGroupPatch(this, 3, 5, 3, 0, 0);
         this.plane = new MyQuad(this);
         this.treerow = new MyTreeRow(this, 6, 3, 0, 0);
+        this.house = new MyHouse(this);
+        this.hill = new MyVoxelHill(this, 3);
 
         //Objects connected to MyInterface
         this.displayNormals = false;
@@ -83,6 +85,8 @@ class MyScene extends CGFscene {
           this.tree.enableNormalViz();
           this.treeGroupPatch.enableNormalViz();
           this.treerow.enableNormalViz();
+          this.house.enableNormalViz();
+          this.hill.enableNormalViz();
         }
         else
         {
@@ -91,6 +95,8 @@ class MyScene extends CGFscene {
           this.tree.disableNormalViz();
           this.treeGroupPatch.disableNormalViz();
           this.treerow.disableNormalViz();
+          this.house.disableNormalViz();
+          this.hill.disableNormalViz();
         }
         //this.prism.display();
         // this.bark.apply();
@@ -114,7 +120,15 @@ class MyScene extends CGFscene {
 
 
         //this.treeGroupPatch.display();
-        this.treerow.display();
+        //this.treerow.display();
+
+        this.pushMatrix();
+        this.translate(5,0,0);
+        this.house.display();
+        this.scale(0.5,0.5,0.5);
+        this.translate(3,-0.5,6);
+        this.hill.display();
+        this.popMatrix();
 
         // ---- END Primitive drawing section
     }

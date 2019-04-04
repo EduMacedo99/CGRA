@@ -33,16 +33,20 @@ class MyUnitCubeQuad extends CGFobject {
     this.materialBottom.loadTexture('images/mineBottom.png');
     this.materialBottom.setTextureWrap('REPEAT', 'REPEAT');
 
-	}
+  }
+  enableNormalViz() {
+    this.quad.enableNormalViz();
+}
+disableNormalViz() {
+    this.quad.disableNormalViz();    
+}
+
   display(){
 
     //Sides of the Cube
     this.materialSide.apply(); //Change material
 
-    if (this.scene.textFilter) //true: NEAREST mode enabled, false: LINEAR mode enabled
-      this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
-    else
-      this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.LINEAR);
+    this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);  this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
 
 
     //Front face
