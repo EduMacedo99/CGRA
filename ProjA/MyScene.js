@@ -30,16 +30,19 @@ class MyScene extends CGFscene {
         this.treeGroupPatch = new MyTreeGroupPatch(this, 3, 5, 3, 0, 0);
         this.treeRow = new MyTreeRow(this, 5, 5, 3, 0, 0);
         this.plane = new MyQuad(this);
+        this.treerow = new MyTreeRow(this, 6, 3, 0, 0);
+        this.house = new MyHouse(this);
+        this.hill = new MyVoxelHill(this, 3);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
         this.displayNormals = false;
         this.displayGrass = true;
         this.selectedObject = 5;
-        this.objects = [this.pyramid, this.prism, this.cone, this.cylinder, this.tree, this.treeRow, this.treeGroupPatch];
+        this.objects = [this.pyramid, this.prism, this.cone, this.cylinder, this.tree, this.treeRow, this.treeGroupPatch, this.house, this.hill];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Pyramid': 0, 'Prism': 1, 'Cone': 2, 'Cylinder': 3, 'Tree': 4, 'Tree Row': 5, 'Tree Group Patch': 6 };
+        this.objectIDs = { 'Pyramid': 0, 'Prism': 1, 'Cone': 2, 'Cylinder': 3, 'Tree': 4, 'Tree Row': 5, 'Tree Group Patch': 6, 'House': 7, 'Hill': 8 };
         
 
 
@@ -111,8 +114,6 @@ class MyScene extends CGFscene {
           //
           this.popMatrix();
         }
-
-
 
         // ---- END Primitive drawing section
     }
