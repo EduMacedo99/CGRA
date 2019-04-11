@@ -29,14 +29,16 @@ class MyScene extends CGFscene {
         this.cone = new MyCone(this, 10, false, 5, 2);
         this.treeGroupPatch = new MyTreeGroupPatch(this, 3, 5, 3, 0, 0);
         this.treeRow = new MyTreeRow(this, 5, 5, 3, 0, 0);
-        this.plane = new MyQuad(this);
+        this.plane = new MyQuad(this, [0, 2, 2, 2, 0, 0, 2, 0]);
         this.treerow = new MyTreeRow(this, 6, 3, 0, 0);
         this.house = new MyHouse(this);
         this.hill = new MyVoxelHill(this, 3);
+        this.skybox = new MyCubeMap(this, 300);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
         this.displayNormals = false;
+        this.displaySkybox = true;
         this.displayGrass = true;
         this.selectedObject = 5;
         this.objects = [this.pyramid, this.prism, this.cone, this.cylinder, this.tree, this.treeRow, this.treeGroupPatch, this.house, this.hill];
@@ -54,6 +56,14 @@ class MyScene extends CGFscene {
         this.grass.setShininess(10.0);
         this.grass.loadTexture('textures/grass.jpg');
         this.grass.setTextureWrap('REPEAT', 'REPEAT');
+
+        this.skybox_t = new CGFappearance(this);
+        this.skybox_t.setAmbient(1, 1, 1, 1);
+        this.skybox_t.setDiffuse(1, 1, 1, 1);
+        this.skybox_t.setSpecular(0.1, 0.1, 0.1, 1);
+        this.skybox_t.setShininess(50.0);
+        this.skybox_t.loadTexture('textures/skybox.png');
+        this.skybox_t.setTextureWrap('REPEAT', 'REPEAT');    
       
     }
     initLights() {
@@ -96,6 +106,16 @@ class MyScene extends CGFscene {
             this.objects[this.selectedObject].disableNormalViz();
 
         this.objects[this.selectedObject].display();
+
+        if (this.displaySkybox){
+          this.skybox_t.apply();
+          this.skybox.display();
+        }
+        if (this.displayNormals)
+          this.skybox.enableNormalViz();
+        else
+          this.skybox.disableNormalViz();
+         
 
         if(this.displayGrass){
           this.pushMatrix();

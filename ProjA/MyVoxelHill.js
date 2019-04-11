@@ -8,50 +8,42 @@ class MyVoxelHill extends CGFobject {
     super(scene);
     this.levels = levels;
 
+    this.cubes = [];
+    this.cube_num = 0;
+
+    for(var i = 0; i < this.levels; i++){
+      var sideSize = 2*i +1;
+
+      for(var k = 0; k < sideSize; k++){
+          this.cubes.push(new MyUnitCubeQuad(this.scene, -i+ k,this.levels-i,-i));
+      }
+      for(var k = 1; k < sideSize; k++){
+          this.cubes.push(new MyUnitCubeQuad(this.scene, -i,this.levels-i,-i + k));
+          this.cubes.push(new MyUnitCubeQuad(this.scene, i,this.levels-i,-i + k));
+      }
+      for(var k = 1; k < (sideSize - 1); k++){
+          this.cubes.push(new MyUnitCubeQuad(this.scene, -i+ k,this.levels-i,i));
+      }
+      this.cube_num += 4*sideSize - 4;
+    }    
+    this.cube_num++; //first cube
+  
+  }
+  enableNormalViz() {
+    for(var i = 0; i < this.cube_num; i++)
+      this.cubes[i].enableNormalViz();
     
-    this.cube = new MyUnitCubeQuad(this.scene);
-    
-    }
-    enableNormalViz() {
-        this.cube.enableNormalViz();
-    }
-    disableNormalViz() {
-        this.cube.disableNormalViz();    
-    }
+  }
+  disableNormalViz() {
+    for(var i = 0; i < this.cube_num; i++)
+      this.cubes[i].disableNormalViz();
+  }
   display(){
 
-    this.scene.pushMatrix();
+    for(var i = 0; i < this.cube_num; i++)
+      this.cubes[i].display();
     
-    for(var i = 0; i < this.levels; i++){
-        var sideSize = 2*i +1;
-
-        for(var k = 0; k < sideSize; k++){
-            this.scene.pushMatrix();
-            this.scene.translate(-i+ k,this.levels-i,-i);
-            this.cube.display();
-            this.scene.popMatrix();
-        }
-
-        for(var k = 0; k < sideSize; k++){
-            this.scene.pushMatrix();
-            this.scene.translate(-i,this.levels-i,-i + k);
-            this.cube.display();
-            this.scene.popMatrix();
-
-            this.scene.pushMatrix();
-            this.scene.translate(i,this.levels-i,-i + k);
-            this.cube.display();
-            this.scene.popMatrix();
-        }
-
-        for(var k = 0; k < sideSize; k++){
-            this.scene.pushMatrix();
-            this.scene.translate(-i+ k,this.levels-i,i);
-            this.cube.display();
-            this.scene.popMatrix();
-        }
-
-    }
+    
 
   }
 }

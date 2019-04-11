@@ -4,8 +4,12 @@
  * @param scene - Reference to MyScene object
  */
 class MyUnitCubeQuad extends CGFobject {
-	constructor(scene) {
+	constructor(scene, x = 0, y = 0, z = 0) {
     super(scene);
+
+    this.x = x;
+    this.y = y;
+    this.z = z;
     
     this.quad = new MyQuad(this.scene);
 
@@ -46,8 +50,12 @@ disableNormalViz() {
     //Sides of the Cube
     this.materialSide.apply(); //Change material
 
-    this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);  this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+    if (this.scene.textFilter)
+      this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
+    else
+      this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.LINEAR);
 
+      this.scene.translate(this.x, this.y, -0.5 + this.z);
 
     //Front face
     this.scene.pushMatrix();
@@ -103,8 +111,8 @@ disableNormalViz() {
     this.scene.translate(0, 0, 0.5); //Translate forward to set correct position before rotating
     this.quad.display();
     this.scene.popMatrix();
-    
-    this.scene.translate(0, 0, -0.5);
+  
+    this.scene.translate(-this.x, -this.y, 0.5 - this.z);
 
 
   }
