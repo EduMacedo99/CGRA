@@ -33,7 +33,7 @@ class MyScene extends CGFscene {
         this.treerow = new MyTreeRow(this, 6, 3, 0, 0);
         this.house = new MyHouse(this);
         this.hill = new MyVoxelHill(this, 3);
-        this.skybox = new MyCubeMap(this, 300);
+        this.skybox = new MyCubeMap(this, 200);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -50,9 +50,9 @@ class MyScene extends CGFscene {
 
         //Materials
         this.grass = new CGFappearance(this);
-        this.grass.setAmbient(0.5, 0.5, 0.5, 1);
-        this.grass.setDiffuse(1, 1, 1, 1);
-        this.grass.setSpecular(0, 0, 0, 1);
+        this.grass.setAmbient(0.7, 0.7, 0.7, 1);
+        this.grass.setDiffuse(0.8, 0.8, 0.8, 1);
+        this.grass.setSpecular(0.2, 0.2, 0.2, 1);
         this.grass.setShininess(10.0);
         this.grass.loadTexture('textures/grass.jpg');
         this.grass.setTextureWrap('REPEAT', 'REPEAT');
@@ -61,7 +61,7 @@ class MyScene extends CGFscene {
         this.skybox_t.setAmbient(1, 1, 1, 1);
         this.skybox_t.setDiffuse(1, 1, 1, 1);
         this.skybox_t.setSpecular(0.1, 0.1, 0.1, 1);
-        this.skybox_t.setShininess(50.0);
+        this.skybox_t.setShininess(150.0);
         this.skybox_t.loadTexture('textures/skybox.png');
         this.skybox_t.setTextureWrap('REPEAT', 'REPEAT');    
       
@@ -73,7 +73,7 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(75, 100, 75), vec3.fromValues(5, 0, 5));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(150, 150, 150), vec3.fromValues(5, 0, 5));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -100,26 +100,19 @@ class MyScene extends CGFscene {
         this.setDefaultAppearance();
 
         // ---- BEGIN Primitive drawing section
+        this.translate(0, -98, 0);
+        
+        
         if (this.displayNormals)
-            this.objects[this.selectedObject].enableNormalViz();
+        this.objects[this.selectedObject].enableNormalViz();
         else
-            this.objects[this.selectedObject].disableNormalViz();
-
+        this.objects[this.selectedObject].disableNormalViz();
+        
         this.objects[this.selectedObject].display();
-
-        if (this.displaySkybox){
-          this.skybox_t.apply();
-          this.skybox.display();
-        }
-        if (this.displayNormals)
-          this.skybox.enableNormalViz();
-        else
-          this.skybox.disableNormalViz();
-         
 
         if(this.displayGrass){
           this.pushMatrix();
-          this.scale(25, 1, 25);
+          this.scale(150, 1, 150);
           this.rotate(-Math.PI/2, 1, 0, 0);
           this.translate(-0.5, -0.5, 0);
           this.grass.apply();
@@ -134,6 +127,18 @@ class MyScene extends CGFscene {
           //
           this.popMatrix();
         }
+        this.translate(0, 98, 0);
+
+        if (this.displaySkybox){
+          this.skybox_t.apply();
+          this.skybox.display();
+        }
+        if (this.displayNormals)
+          this.skybox.enableNormalViz();
+        else
+          this.skybox.disableNormalViz();
+         
+
 
         // ---- END Primitive drawing section
     }
