@@ -58,14 +58,21 @@ display(){
   this.scene.popMatrix();
   this.scene.popMatrix();*/
   
+  this.scene.pushMatrix();
+
+  this.scene.scale(0.7,0.7,0.7);
+  this.scene.translate(-15,0,8);
+
   //walls
   this.scene.pushMatrix();
-  
+  this.scene.translate(0,0,3);
   this.scene.scale(30,5,6);
   this.scene.translate(0.5,0.5,0.5);
   this.walls.display();
   this.scene.popMatrix();
+
   this.scene.pushMatrix();
+  this.scene.translate(3,0,0);
   this.scene.rotate(Math.PI/2,0,1,0);
   this.scene.scale(20,5,6);
   this.scene.translate(0.5,0.5,0.5);
@@ -73,13 +80,14 @@ display(){
   this.scene.popMatrix();
 
   this.scene.pushMatrix();
-  this.scene.translate(0,0,-20);
+  this.scene.translate(0,0,-17);
   this.scene.scale(30,5,6);
   this.scene.translate(0.5,0.5,0.5);
   this.walls.display();
   this.scene.popMatrix();
+
   this.scene.pushMatrix();
-  this.scene.translate(24,0,0);
+  this.scene.translate(27,0,0);
   this.scene.rotate(Math.PI/2,0,1,0);
   this.scene.scale(20,5,6);
   this.scene.translate(0.5,0.5,0.5);
@@ -121,31 +129,34 @@ display(){
 
   this.scene.pushMatrix();
 
-  this.scene.translate(15,5,3);
+  this.scene.translate(15,5,2.8);
   this.scene.scale(19.2,5,4);
   this.scene.rotate(Math.PI/4,0,1,0);
   this.roof2.display();
 
-  this.scene.translate(3.6,0,-3.6);
+  this.scene.translate(3.55,0,-3.55);
   this.roof2.display();
   
   this.scene.popMatrix();
 
 
   this.scene.pushMatrix();
-
-  
-  this.scene.translate(0.75,0,0);
+  this.scene.translate(3,5,-7.5);
+  this.scene.scale(4,5,16.5);
   this.scene.rotate(Math.PI/4,0,1,0);
   this.roof2.display();
+  this.scene.popMatrix();
 
 
-
-
+  this.scene.pushMatrix();
+  this.scene.translate(27,5,-7.5);
+  this.scene.scale(4,5,16.5);
+  this.scene.rotate(Math.PI/4,0,1,0);
+  this.roof2.display();
+  this.scene.popMatrix();
 
 
   this.scene.popMatrix();
-
 
 
     

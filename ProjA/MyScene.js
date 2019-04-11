@@ -40,7 +40,7 @@ class MyScene extends CGFscene {
         this.displayNormals = false;
         this.displaySkybox = true;
         this.displayGrass = true;
-        this.selectedObject = 5;
+        this.selectedObject = 7;
         this.objects = [this.pyramid, this.prism, this.cone, this.cylinder, this.tree, this.treeRow, this.treeGroupPatch, this.house, this.hill];
 
         // Labels and ID's for object selection on MyInterface
@@ -73,7 +73,7 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(25, 50, 25), vec3.fromValues(5, 0, 5));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(75, 100, 75), vec3.fromValues(5, 0, 5));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
