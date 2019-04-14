@@ -4,21 +4,21 @@
  * @param scene - Reference to MyScene object
  */
 class MyUnitCubeQuad extends CGFobject {
-	constructor(scene, x = 0, y = 0, z = 0) {
+	constructor(scene, texture_sides, texture_top, texture_bottom, x = 0, y = 0, z = 0) {
     super(scene);
 
     this.x = x;
     this.y = y;
     this.z = z;
     
-    this.quad = new MyQuad(this.scene);
+    this.quad = new MyQuad(this.scene, [0, 2, 6, 2, 0, 0, 6, 0]);
 
     this.materialSide = new CGFappearance(this.scene);
     this.materialSide.setAmbient(1, 1, 1, 1.0);
     this.materialSide.setSpecular(0.0, 0.0, 0.0, 1.0);
     this.materialSide.setDiffuse(0.5, 0.5, 0.5, 1.0);
     this.materialSide.setShininess(10.0);
-    this.materialSide.loadTexture('images/mineSide.png');
+    this.materialSide.loadTexture(texture_sides);
     this.materialSide.setTextureWrap('REPEAT', 'REPEAT');
 
     this.materialTop = new CGFappearance(this.scene);
@@ -26,7 +26,7 @@ class MyUnitCubeQuad extends CGFobject {
     this.materialTop.setSpecular(0.0, 0.0, 0.0, 1.0);
     this.materialTop.setDiffuse(0.5, 0.5, 0.5, 1.0);
     this.materialTop.setShininess(10.0);
-    this.materialTop.loadTexture('images/mineTop.png');
+    this.materialTop.loadTexture(texture_top);
     this.materialTop.setTextureWrap('REPEAT', 'REPEAT');
 
     this.materialBottom = new CGFappearance(this.scene);
@@ -34,7 +34,7 @@ class MyUnitCubeQuad extends CGFobject {
     this.materialBottom.setSpecular(0.0, 0.0, 0.0, 1.0);
     this.materialBottom.setDiffuse(0.5, 0.5, 0.5, 1.0);
     this.materialBottom.setShininess(10.0);
-    this.materialBottom.loadTexture('images/mineBottom.png');
+    this.materialBottom.loadTexture(texture_bottom);
     this.materialBottom.setTextureWrap('REPEAT', 'REPEAT');
 
   }
@@ -50,12 +50,10 @@ disableNormalViz() {
     //Sides of the Cube
     this.materialSide.apply(); //Change material
 
-    if (this.scene.textFilter)
-      this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.NEAREST);
-    else
-      this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.LINEAR);
+    this.scene.gl.texParameteri(this.scene.gl.TEXTURE_2D, this.scene.gl.TEXTURE_MAG_FILTER, this.scene.gl.LINEAR);
 
-      this.scene.translate(this.x, this.y, -0.5 + this.z);
+    this.scene.pushMatrix();
+    this.scene.translate(this.x, this.y, -0.5 + this.z);
 
     //Front face
     this.scene.pushMatrix();
@@ -112,7 +110,7 @@ disableNormalViz() {
     this.quad.display();
     this.scene.popMatrix();
   
-    this.scene.translate(-this.x, -this.y, 0.5 - this.z);
+    this.scene.popMatrix();
 
 
   }

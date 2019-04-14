@@ -28,7 +28,7 @@ class MyCone extends CGFobject {
             }
             else{
               this.indices.push(i, (i+1) % this.slices, this.slices);
-              this.normals.push(Math.cos(ang), Math.cos(Math.PI/4.0), -Math.sin(ang));
+              this.normals.push(Math.cos(ang), Math.cos(ang)*Math.sin(ang+alphaAng) - Math.sin(ang)*Math.cos(ang+alphaAng), -Math.sin(ang));
             }
             this.texCoords.push(0.5 + Math.cos(ang)*0.5, 0.5 - Math.sin(ang)*0.5);
             ang+=alphaAng;

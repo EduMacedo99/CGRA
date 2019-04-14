@@ -15,14 +15,14 @@ class MyVoxelHill extends CGFobject {
       var sideSize = 2*i +1;
 
       for(var k = 0; k < sideSize; k++){
-          this.cubes.push(new MyUnitCubeQuad(this.scene, -i+ k,this.levels-i,-i));
+          this.cubes.push(new MyUnitCubeQuad(this.scene, 'textures/grass.jpg', 'textures/grass.jpg', 'textures/grass.jpg', -i+ k,this.levels-i,-i));
       }
       for(var k = 1; k < sideSize; k++){
-          this.cubes.push(new MyUnitCubeQuad(this.scene, -i,this.levels-i,-i + k));
-          this.cubes.push(new MyUnitCubeQuad(this.scene, i,this.levels-i,-i + k));
+          this.cubes.push(new MyUnitCubeQuad(this.scene, 'textures/grass.jpg', 'textures/grass.jpg', 'textures/grass.jpg', -i,this.levels-i,-i + k));
+          this.cubes.push(new MyUnitCubeQuad(this.scene, 'textures/grass.jpg', 'textures/grass.jpg', 'textures/grass.jpg', i,this.levels-i,-i + k));
       }
       for(var k = 1; k < (sideSize - 1); k++){
-          this.cubes.push(new MyUnitCubeQuad(this.scene, -i+ k,this.levels-i,i));
+          this.cubes.push(new MyUnitCubeQuad(this.scene, 'textures/grass.jpg', 'textures/grass.jpg', 'textures/grass.jpg', -i+ k,this.levels-i,i));
       }
       this.cube_num += 4*sideSize - 4;
     }    

@@ -73,7 +73,7 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(150, 150, 150), vec3.fromValues(5, 0, 5));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(5, 0, 5));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -100,7 +100,7 @@ class MyScene extends CGFscene {
         this.setDefaultAppearance();
 
         // ---- BEGIN Primitive drawing section
-        this.translate(0, -98, 0);
+       // this.translate(0, -98, 0);
         
         
         if (this.displayNormals)
@@ -127,7 +127,7 @@ class MyScene extends CGFscene {
           //
           this.popMatrix();
         }
-        this.translate(0, 98, 0);
+        //this.translate(0, 98, 0);
 
         if (this.displaySkybox){
           this.skybox_t.apply();
