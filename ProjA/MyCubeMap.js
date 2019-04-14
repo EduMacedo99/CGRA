@@ -21,12 +21,12 @@ class MyCubeMap extends CGFobject {
    -0.5*scale, -0.5*scale,  0.5*scale, //6  |  6                                 |/         | /
    -0.5*scale, -0.5*scale, -0.5*scale, //7  |  7                                 6----------2
 
-    0.51*scale,  0.5*scale,  0.51*scale, //8  |  0
-    0.51*scale,  0.5*scale, -0.51*scale, //9  |  1
+    0.5*scale,  0.5*scale,  0.5*scale, //8  |  0
+    0.5*scale,  0.5*scale, -0.5*scale, //9  |  1
     0.5*scale, -0.5*scale,  0.5*scale, //10 |  2
     0.5*scale, -0.5*scale, -0.5*scale, //11 |  3
-   -0.51*scale,  0.5*scale,  0.51*scale, //12 |  4
-   -0.51*scale,  0.5*scale, -0.51*scale, //13 |  5
+   -0.5*scale,  0.5*scale,  0.5*scale, //12 |  4
+   -0.5*scale,  0.5*scale, -0.5*scale, //13 |  5
    -0.5*scale, -0.5*scale,  0.5*scale, //14 |  6
    -0.5*scale, -0.5*scale, -0.5*scale, //15 |  7
 
