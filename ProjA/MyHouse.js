@@ -9,7 +9,8 @@ class MyHouse extends CGFobject {
     
     this.normals = []; 
 
-    this.walls = new MyUnitCubeQuad(this.scene, 'textures/wall.jpg', 'textures/wall.jpg', 'textures/wall.jpg');
+    this.walls = new MyUnitCubeQuad(this.scene, 'textures/wall_window.jpg', 'textures/wall_window.jpg', 'textures/wall_window.jpg');
+    this.front_wall = new MyUnitCubeQuad(this.scene, 'textures/wall_door.jpg', 'textures/wall_window_door.jpg', 'textures/wall_window_door.jpg')
     this.roof = new MyPyramid(this.scene, 4, 1, Math.SQRT2/2 +0.4);
     this.columns = new MyPrism(this.scene, 20, 10, 2.5);
     this.roof2 = new MyPyramid(this.scene, 4, 0.4, Math.SQRT2/2 +0.4);
@@ -68,7 +69,7 @@ display(){
   this.scene.translate(0,0,3);
   this.scene.scale(30,5,6);
   this.scene.translate(0.5,0.5,0.51);
-  this.walls.display();
+  this.front_wall.display();
   this.scene.translate(0,0,-4.2);
   this.walls.display();
   this.scene.popMatrix();
