@@ -33,10 +33,17 @@ class MyPyramid extends CGFobject {
             this.vertices.push(ca*this.radius, 0, -sa*this.radius);
             this.vertices.push(caa*this.radius, 0, -saa*this.radius);
 
-            this.texCoords.push(0.5, 0);
-            this.texCoords.push(0.25, 0.5);
-            this.texCoords.push(0.75, 0.5);
-
+            if(i % 2){
+              this.texCoords.push(0.5, 0);
+              this.texCoords.push(0.75, 0.5);
+              this.texCoords.push(0.25, 0.5);                
+            }
+            else {
+              this.texCoords.push(0.5, 0);
+              this.texCoords.push(0.25, 0.5);
+              this.texCoords.push(0.75, 0.5);
+            }
+            
             // triangle normal computed by cross product of two edges
             var normal= [
                 saa-sa,

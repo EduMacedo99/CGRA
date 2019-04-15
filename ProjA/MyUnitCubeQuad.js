@@ -4,7 +4,7 @@
  * @param scene - Reference to MyScene object
  */
 class MyUnitCubeQuad extends CGFobject {
-	constructor(scene, texture_sides = "-", texture_top = "-", texture_bottom = "-", x = 0, y = 0, z = 0) {
+	constructor(scene, texture_sides = '-', texture_top = '-', texture_bottom = '-', x = 0, y = 0, z = 0) {
     super(scene);
 
     this.x = x;
