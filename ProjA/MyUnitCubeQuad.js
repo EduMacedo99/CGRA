@@ -16,7 +16,7 @@ class MyUnitCubeQuad extends CGFobject {
     
     this.quad = new MyQuad(this.scene, [0, 1, 1, 1, 0, 0, 1, 0]);
 
-    if(texture_sides != "-"){
+    if(texture_sides != '-'){
       this.text_side = true;
       this.materialSide = new CGFappearance(this.scene);
       this.materialSide.setAmbient(1, 1, 1, 1.0);
@@ -27,7 +27,7 @@ class MyUnitCubeQuad extends CGFobject {
       this.materialSide.setTextureWrap('REPEAT', 'REPEAT');
     }
 
-    if(texture_top != "-"){
+    if(texture_top != '-'){
       this.text_top = true;
       this.materialTop = new CGFappearance(this.scene);
       this.materialTop.setAmbient(1, 1, 1, 1.0);
@@ -38,7 +38,7 @@ class MyUnitCubeQuad extends CGFobject {
       this.materialTop.setTextureWrap('REPEAT', 'REPEAT');
     }
 
-    if(texture_bottom != "-"){
+    if(texture_bottom != '-'){
       this.text_bottom = true;
       this.materialBottom = new CGFappearance(this.scene);
       this.materialBottom.setAmbient(1, 1, 1, 1.0);
