@@ -9,12 +9,46 @@ class MyHouse extends CGFobject {
     
     this.normals = []; 
 
-    this.walls = new MyUnitCubeQuad(this.scene, 'textures/wall_window.jpg', 'textures/wall_window.jpg', 'textures/wall_window.jpg');
-    this.front_wall = new MyUnitCubeQuad(this.scene, 'textures/wall_door.jpg', 'textures/wall_window_door.jpg', 'textures/wall_window_door.jpg')
+    this.walls = new MyUnitCubeQuad(this.scene, 'textures/wall_window.jpg');
+    this.front_wall = new MyUnitCubeQuad(this.scene, 'textures/wall_door.jpg')
     this.roof = new MyPyramid(this.scene, 4, 1, Math.SQRT2/2 +0.4);
-    this.columns = new MyPrism(this.scene, 20, 10, 2.5);
+    this.columns = new MyPrism(this.scene, 8, 10, 2.5);
     this.roof2 = new MyPyramid(this.scene, 4, 0.4, Math.SQRT2/2 +0.4);
-     
+    
+    var txtcoords = [];
+    for(var i = 0; i < 4; i++){
+        txtcoords.push(0.5, 0.5);
+        txtcoords.push(0, 1);
+        txtcoords.push(1, 1);
+    }
+
+    this.roof2.updateTexCoords(txtcoords);
+
+
+    this.columns_tex = new CGFappearance(this.scene);
+    this.columns_tex.setAmbient(1, 1, 1, 1.0);
+    this.columns_tex.setDiffuse(0.5, 0.5, 0.5, 1.0);
+    this.columns_tex.setSpecular(.2, .2, .2, 1.0);
+    this.columns_tex.setShininess(50.0);
+    this.columns_tex.loadTexture('textures/wall_column.jpg');
+    this.columns_tex.setTextureWrap('REPEAT', 'REPEAT');
+
+
+    this.roof_tex = new CGFappearance(this.scene);
+    this.roof_tex.setAmbient(1, 1, 1, 1.0);
+    this.roof_tex.setDiffuse(0.5, 0.5, 0.5, 1.0);
+    this.roof_tex.setSpecular(.2, .2, .2, 1.0);
+    this.roof_tex.setShininess(50.0);
+    this.roof_tex.loadTexture('textures/roof.jpg');
+    this.roof_tex.setTextureWrap('REPEAT', 'REPEAT');
+
+    this.roof2_tex = new CGFappearance(this.scene);
+    this.roof2_tex.setAmbient(1, 1, 1, 1.0);
+    this.roof2_tex.setDiffuse(0.5, 0.5, 0.5, 1.0);
+    this.roof2_tex.setSpecular(.2, .2, .2, 1.0);
+    this.roof2_tex.setShininess(50.0);
+    this.roof2_tex.loadTexture('textures/roof_2.jpg');
+    this.roof2_tex.setTextureWrap('REPEAT', 'REPEAT');
 
   }
 
@@ -86,6 +120,8 @@ display(){
 
 
   //pilares
+  this.columns_tex.apply();
+
   this.scene.pushMatrix();
   this.scene.translate(1.5,0,5);
   this.columns.display();
@@ -99,9 +135,11 @@ display(){
   
   
   //telhados
+
+  this.roof_tex.apply();
   
   this.scene.pushMatrix();
-
+  
   this.scene.translate(1.5,9.8,5);
   this.scene.scale(4,4,4);
   this.roof.display();
@@ -116,6 +154,7 @@ display(){
   this.scene.popMatrix();
 
 //-------------------
+  this.roof2_tex.apply();
 
   this.scene.pushMatrix();
 
