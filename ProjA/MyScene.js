@@ -27,13 +27,20 @@ class MyScene extends CGFscene {
         this.cylinder = new MyCylinder(this, 10, 5, 1);
         this.tree = new MyTree(this, 10, 2.5, 0.6, 0.7, 3);
         this.cone = new MyCone(this, 10, false, 5, 2);
-        this.treeGroupPatch = new MyTreeGroupPatch(this, 3, 5, 3, 0, 0);
+        this.treeGroupPatch = new MyTreeGroupPatch(this, 3, 4, 3, 0, 0);
         this.treeRow = new MyTreeRow(this, 5, 5, 3, 0, 0);
         this.plane = new MyQuad(this, [0, 2, 2, 2, 0, 0, 2, 0]);
         this.treerow = new MyTreeRow(this, 6, 3, 0, 0);
         this.house = new MyHouse(this);
         this.hill = new MyVoxelHill(this, 3);
         this.skybox = new MyCubeMap(this, 200);
+
+        this.treeGroupPatch2 = new MyTreeGroupPatch(this, 5, 6, 4, 0, 0);
+        this.treeRow2 = new MyTreeRow(this, 10, 5, 3, 0, 0);
+        this.hill2 = new MyVoxelHill(this, 10);
+        this.fireplace = new MyPyramid(this, 4, 2, 1.5);
+        this.fireplace2 = new MyPyramid(this, 4, 3, 1.5);
+
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -103,7 +110,7 @@ class MyScene extends CGFscene {
        // this.translate(0, -98, 0);
         
         
-        if (this.displayNormals)
+/*        if (this.displayNormals)
         this.objects[this.selectedObject].enableNormalViz();
         else
         this.objects[this.selectedObject].disableNormalViz();
@@ -140,6 +147,91 @@ class MyScene extends CGFscene {
          
 
 
+        // ---- END Primitive drawing section*/
+        this.pushMatrix();
+        this.treeGroupPatch.display();
+        this.translate(5,0,5);
+        this.scale(1.5,1.5,1.5);
+        this.house.display();
+        this.popMatrix();
+
+        this.pushMatrix();
+        this.translate(42,0,-45);
+        this.treeGroupPatch2.display();
+        this.popMatrix();
+
+        this.pushMatrix();
+        this.translate(70,0,55);
+        this.scale(2,2,2);
+        this.hill2.display();
+        this.popMatrix();
+
+        this.pushMatrix();
+        this.translate(-12,0,-18);
+        this.treeRow.display();
+        this.translate(0,0,44);
+        this.treeRow.display();
+        this.popMatrix();
+
+        this.pushMatrix();
+        this.translate(-23,0,32);
+        this.rotate(Math.PI/2,0,1,0);
+        this.treeRow2.display();
+        this.popMatrix();
+
+        this.pushMatrix();
+        this.translate(-40,0,15);
+        this.scale(2,2,2);
+        this.hill.display();
+        this.popMatrix();
+
+        this.pushMatrix();
+        this.pushMatrix();
+        this.translate(30,0,0);
+        //this.rotate(Math.PI/4,0,1,0);
+
+        this.fireplace.display();
+        this.translate(1.5,0,0);
+        this.fireplace.display();
+        this.translate(0,0,-1.5);
+        this.fireplace.display();
+        this.translate(-1.5,0,0);
+        this.fireplace.display();
+        this.translate(0.75,0,0.75)
+        this.fireplace2.display();;
+
+        this.popMatrix();
+        this.popMatrix();
+
+
+        if(this.displayGrass){
+          this.pushMatrix();
+          this.scale(150, 1, 150);
+          this.rotate(-Math.PI/2, 1, 0, 0);
+          this.translate(-0.5, -0.5, 0);
+          this.grass.apply();
+          this.plane.display();
+          //
+          this.translate(1, 0, 0);
+          this.plane.display();
+          this.translate(0, 1, 0);
+          this.plane.display();
+          this.translate(-1, 0, 0);
+          this.plane.display();
+          //
+          this.popMatrix();
+        }
+        this.translate(0, 98, 0);
+
+        if (this.displaySkybox){
+          this.skybox_t.apply();
+          this.skybox.display();
+        }
+        if (this.displayNormals)
+          this.skybox.enableNormalViz();
+        else
+          this.skybox.disableNormalViz();
+         
         // ---- END Primitive drawing section
     }
 }
