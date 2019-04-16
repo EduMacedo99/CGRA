@@ -71,16 +71,59 @@ class MyScene extends CGFscene {
         this.skybox_t.setShininess(150.0);
         this.skybox_t.loadTexture('textures/skybox.png');
         this.skybox_t.setTextureWrap('REPEAT', 'REPEAT');    
+
+        var color = this.hexToRgbA('#A60607');
+        this.fire_1 = new CGFappearance(this);
+        this.fire_1.setAmbient(0.3*color[0], 0.3*color[1], 0.3*color[2], 1);
+        this.fire_1.setDiffuse(0.3*color[0], 0.3*color[1], 0.3*color[2], 1);
+        this.fire_1.setSpecular(0, 0, 0, 1);
+        this.fire_1.setShininess(150.0);
+
+        color = this.hexToRgbA('#860607');
+        this.fire_2 = new CGFappearance(this);
+        this.fire_2.setAmbient(0.3*color[0], 0.3*color[1], 0.3*color[2], 1);
+        this.fire_2.setDiffuse(0.3*color[0], 0.3*color[1], 0.3*color[2], 1);
+        this.fire_2.setSpecular(0, 0, 0, 1);
+        this.fire_2.setShininess(150.0);
       
     }
+    hexToRgbA(hex){
+      var ret;
+      //either we receive a html/css color or a RGB vector
+      if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+          ret=[
+              parseInt(hex.substring(1,3),16).toPrecision()/255.0,
+              parseInt(hex.substring(3,5),16).toPrecision()/255.0,
+              parseInt(hex.substring(5,7),16).toPrecision()/255.0,
+              1.0
+          ];
+      }
+      else
+          ret=[
+              hex[0].toPrecision()/255.0,
+              hex[1].toPrecision()/255.0,
+              hex[2].toPrecision()/255.0,
+              1.0
+          ];
+      return ret;
+    }
     initLights() {
-        this.lights[0].setPosition(15, 2, 5, 1);
-        this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
-        this.lights[0].enable();
-        this.lights[0].update();
+      this.lights[0].setPosition(15, 2, 5, 1);
+      this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
+      this.lights[0].enable();
+      this.lights[0].update();
+
+      var color = this.hexToRgbA('#E6292C');
+      this.lights[1].setPosition(30.75, 2.5, 0.75, 1);
+      this.lights[1].setDiffuse(color[0], color[1], color[2], 1.0);
+      this.lights[1].setSpecular(color[0], color[1], color[2], 1.0);
+      this.lights[1].enable();
+      this.lights[1].setVisible(true);
+      this.lights[1].setLinearAttenuation(2);
+      this.lights[1].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(50, 50, 50), vec3.fromValues(5, 0, 5));
+        this.camera = new CGFcamera(0.4, 0.1, 350, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 5, 0));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -149,7 +192,10 @@ class MyScene extends CGFscene {
 
         // ---- END Primitive drawing section*/
         this.pushMatrix();
+        this.pushMatrix();
+        this.translate(-1, 0, -2);
         this.treeGroupPatch.display();
+        this.popMatrix();
         this.translate(5,0,5);
         this.scale(1.5,1.5,1.5);
         this.house.display();
@@ -167,7 +213,7 @@ class MyScene extends CGFscene {
         this.popMatrix();
 
         this.pushMatrix();
-        this.translate(-12,0,-18);
+        this.translate(-12,0,-22);
         this.treeRow.display();
         this.translate(0,0,44);
         this.treeRow.display();
@@ -190,6 +236,8 @@ class MyScene extends CGFscene {
         this.translate(30,0,0);
         //this.rotate(Math.PI/4,0,1,0);
 
+        this.fire_2.apply();
+
         this.fireplace.display();
         this.translate(1.5,0,0);
         this.fireplace.display();
@@ -197,6 +245,7 @@ class MyScene extends CGFscene {
         this.fireplace.display();
         this.translate(-1.5,0,0);
         this.fireplace.display();
+        this.fire_1.apply();
         this.translate(0.75,0,0.75)
         this.fireplace2.display();;
 
@@ -206,7 +255,7 @@ class MyScene extends CGFscene {
 
         if(this.displayGrass){
           this.pushMatrix();
-          this.scale(150, 1, 150);
+          this.scale(100, 1, 100);
           this.rotate(-Math.PI/2, 1, 0, 0);
           this.translate(-0.5, -0.5, 0);
           this.grass.apply();
