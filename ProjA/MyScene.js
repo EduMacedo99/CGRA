@@ -43,6 +43,7 @@ class MyScene extends CGFscene {
         this.fireplace = new MyPyramid(this, 4, 2, 1.5);
         this.fireplace2 = new MyPyramid(this, 4, 3, 1.5);
         this.quad = new MyQuad(this);
+        this.rock = new MyUnitCubeQuad(this, 'textures/rock.jpg', 'textures/rock.jpg', 'textures/rock.jpg');
 
 
         //Objects connected to MyInterface
@@ -82,7 +83,7 @@ class MyScene extends CGFscene {
       this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
       this.lights[0].setAmbient(0.6, 0.6, 0.6, 1);
       this.lights[0].setSpecular(1.0, 1.0, 1.0, 1.0);
-      this.lights[0].enable();
+      //this.lights[0].enable();
       this.lights[0].update();
 
       var color = this.hexToRgbA('#d54801');
@@ -91,7 +92,7 @@ class MyScene extends CGFscene {
       this.lights[1].setSpecular(color[0], color[1], color[2], 1.0);
       this.lights[1].setAmbient(color[0], color[1], color[2], 1);
       this.lights[1].setLinearAttenuation(0.05);
-      //this.lights[1].enable();
+      this.lights[1].enable();
       this.lights[1].update();
     }
     initCameras() {
@@ -309,6 +310,12 @@ class MyScene extends CGFscene {
         this.scale(4.5, 1, 4);
         this.rotate(-Math.PI/2, 1, 0, 0);
         this.quad.display();
+        this.popMatrix();
+
+        this.pushMatrix();
+        this.scale(2.5,2.5,2.5);
+        this.translate(12,0.5,4);
+        this.rock.display();
         this.popMatrix();
 
 
