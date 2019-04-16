@@ -47,7 +47,7 @@ class MyPyramid extends CGFobject {
             // triangle normal computed by cross product of two edges
             var normal= [
                 saa-sa,
-                ca*saa-sa*caa,
+                this.radius/this.height,
                 caa-ca
             ];
 

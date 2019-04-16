@@ -10,28 +10,26 @@ class MyUnitCubeQuad extends CGFobject {
     this.quad = new MyQuad(this.scene, [0, 1, 1, 1, 0, 0, 1, 0]);
 
     this.materialSide = new CGFappearance(this.scene);
-    this.materialSide.setAmbient(0.4, 0.4, 0.4, 1.0);
-    this.materialSide.setSpecular(0.0, 0.0, 0.0, 1.0);
-    this.materialSide.setDiffuse(0.5, 0.5, 0.5, 1.0);
-    this.materialSide.setShininess(10.0);
+    this.materialSide.setAmbient(0.5, 0.5, 0.5, 1.0);
+    this.materialSide.setDiffuse(0.8, 0.8, 0.8, 1.0);
+    this.materialSide.setSpecular(0.2, 0.2, 0.2, 1.0);
+    this.materialSide.setShininess(50.0);
     this.materialSide.loadTexture(texture_sides);
     this.materialSide.setTextureWrap('REPEAT', 'REPEAT');
 
-    this.text_top = true;
     this.materialTop = new CGFappearance(this.scene);
-    this.materialTop.setAmbient(0.4, 0.4, 0.4, 1.0);
-    this.materialTop.setSpecular(0.0, 0.0, 0.0, 1.0);
-    this.materialTop.setDiffuse(0.5, 0.5, 0.5, 1.0);
-    this.materialTop.setShininess(10.0);
+    this.materialTop.setAmbient(1, 1, 1, 1.0);
+    this.materialTop.setDiffuse(0.8, 0.8, 0.8, 1.0);
+    this.materialTop.setSpecular(0.2, 0.2, 0.2, 1.0);
+    this.materialTop.setShininess(50.0);
     this.materialTop.loadTexture(texture_top);
     this.materialTop.setTextureWrap('REPEAT', 'REPEAT');
 
-    this.text_bottom = true;
     this.materialBottom = new CGFappearance(this.scene);
-    this.materialBottom.setAmbient(0.4, 0.4, 0.4, 1.0);
-    this.materialBottom.setSpecular(0.0, 0.0, 0.0, 1.0);
-    this.materialBottom.setDiffuse(0.5, 0.5, 0.5, 1.0);
-    this.materialBottom.setShininess(10.0);
+    this.materialBottom.setAmbient(1, 1, 1, 1.0);
+    this.materialBottom.setDiffuse(0.8, 0.8, 0.8, 1.0);
+    this.materialBottom.setSpecular(0.2, 0.2, 0.2, 1.0);
+    this.materialBottom.setShininess(50.0);
     this.materialBottom.loadTexture(texture_bottom);
     this.materialBottom.setTextureWrap('REPEAT', 'REPEAT');
 

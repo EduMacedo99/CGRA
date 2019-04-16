@@ -24,11 +24,11 @@ class MyCone extends CGFobject {
             this.vertices.push(Math.cos(ang)*this.radius, 0, -Math.sin(ang)*this.radius);
             if(inverted){
               this.indices.push((i+1) % this.slices, i, this.slices);
-              this.normals.push(-Math.cos(ang), -Math.cos(Math.PI/4.0), Math.sin(ang));
+              this.normals.push(-Math.cos(ang), this.radius/this.height, Math.sin(ang));
             }
             else{
               this.indices.push(i, (i+1) % this.slices, this.slices);
-              this.normals.push(Math.cos(ang), Math.cos(ang)*Math.sin(ang+alphaAng) - Math.sin(ang)*Math.cos(ang+alphaAng), -Math.sin(ang));
+              this.normals.push(Math.cos(ang), this.radius/this.height, -Math.sin(ang));
             }
             this.texCoords.push(0.5 + Math.cos(ang)*0.5, 0.5 - Math.sin(ang)*0.5);
             ang+=alphaAng;

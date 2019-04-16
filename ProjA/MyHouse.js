@@ -14,6 +14,7 @@ class MyHouse extends CGFobject {
     this.roof = new MyPyramid(this.scene, 4, 1, Math.SQRT2/2 +0.4);
     this.columns = new MyPrism(this.scene, 8, 10, 2.5);
     this.roof2 = new MyPyramid(this.scene, 4, 0.4, Math.SQRT2/2 +0.4);
+    this.circle = new MyCircle(this.scene, 4, Math.SQRT2/2 +0.4);
     
     var txtcoords = [];
     for(var i = 0; i < 4; i++){
@@ -26,29 +27,37 @@ class MyHouse extends CGFobject {
 
 
     this.columns_tex = new CGFappearance(this.scene);
-    this.columns_tex.setAmbient(1, 1, 1, 1.0);
-    this.columns_tex.setDiffuse(0.5, 0.5, 0.5, 1.0);
-    this.columns_tex.setSpecular(.2, .2, .2, 1.0);
+    this.columns_tex.setAmbient(0.5, 0.5, 0.5, 1.0);
+    this.columns_tex.setDiffuse(0.8, 0.8, 0.8, 1.0);
+    this.columns_tex.setSpecular(0.2, 0.2, 0.2, 1.0);
     this.columns_tex.setShininess(50.0);
     this.columns_tex.loadTexture('textures/wall_column.jpg');
     this.columns_tex.setTextureWrap('REPEAT', 'REPEAT');
 
 
     this.roof_tex = new CGFappearance(this.scene);
-    this.roof_tex.setAmbient(1, 1, 1, 1.0);
-    this.roof_tex.setDiffuse(0.5, 0.5, 0.5, 1.0);
-    this.roof_tex.setSpecular(.2, .2, .2, 1.0);
+    this.roof_tex.setAmbient(0.5, 0.5, 0.5, 1.0);
+    this.roof_tex.setDiffuse(0.8, 0.8, 0.8, 1.0);
+    this.roof_tex.setSpecular(0.2, 0.2, 0.2, 1.0);
     this.roof_tex.setShininess(50.0);
     this.roof_tex.loadTexture('textures/roof.jpg');
     this.roof_tex.setTextureWrap('REPEAT', 'REPEAT');
 
     this.roof2_tex = new CGFappearance(this.scene);
-    this.roof2_tex.setAmbient(1, 1, 1, 1.0);
-    this.roof2_tex.setDiffuse(0.5, 0.5, 0.5, 1.0);
-    this.roof2_tex.setSpecular(.2, .2, .2, 1.0);
+    this.roof2_tex.setAmbient(0.5, 0.5, 0.5, 1.0);
+    this.roof2_tex.setDiffuse(0.8, 0.8, 0.8, 1.0);
+    this.roof2_tex.setSpecular(0.2, 0.2, 0.2, 1.0);
     this.roof2_tex.setShininess(50.0);
     this.roof2_tex.loadTexture('textures/roof_2.jpg');
     this.roof2_tex.setTextureWrap('REPEAT', 'REPEAT');
+
+    this.roof_under = new CGFappearance(this.scene);
+    this.roof_under.setAmbient(0.5, 0.5, 0.5, 1.0);
+    this.roof_under.setDiffuse(0.8, 0.8, 0.8, 1.0);
+    this.roof_under.setSpecular(0.2, 0.2, 0.2, 1.0);
+    this.roof_under.setShininess(50.0);
+    this.roof_under.loadTexture('textures/wall_under.jpg');
+    this.roof_under.setTextureWrap('REPEAT', 'REPEAT');
 
   }
 
@@ -78,11 +87,11 @@ display(){
   this.scene.pushMatrix();
   this.scene.translate(0.6,0,0.6);;
   this.columns.display();
-  this.scene.translate(0,0,-1.2);
+  this.scene.translate(0,0,-10.2);
   this.columns.display();
-  this.scene.translate(-1.2,0,0);
+  this.scene.translate(-10.2,0,0);
   this.columns.display();
-  this.scene.translate(0,0,1.2);
+  this.scene.translate(0,0,10.2);
   this.columns.display();
   this.scene.popMatrix();
   this.scene.pushMatrix();
@@ -153,6 +162,25 @@ display(){
 
   this.scene.popMatrix();
 
+  //de baixo dos telhados
+  this.roof_under.apply();
+  
+  this.scene.pushMatrix();
+  this.scene.rotate(Math.PI, 1, 0, 0);
+  
+  this.scene.translate(1.5,-9.8,23.4);
+  this.scene.scale(4,1,4);
+  this.circle.display();
+  this.scene.translate(0,0,-7.1);
+  this.circle.display();
+
+  this.scene.translate(6.75,0,0);
+  this.circle.display();
+  this.scene.translate(0,0,7.1);
+  this.circle.display();
+
+  this.scene.popMatrix();
+
 //-------------------
   this.roof2_tex.apply();
 
@@ -168,7 +196,6 @@ display(){
   
   this.scene.popMatrix();
 
-
   this.scene.pushMatrix();
   this.scene.translate(3,5,-10);
   this.scene.scale(4,5,19.2);
@@ -179,26 +206,24 @@ display(){
   this.roof2.display();
   this.scene.popMatrix();
 
-
-
   this.scene.popMatrix();
-
-
-    
-
-
   }
   enableNormalViz(){
-    this.roof.enableNormalViz();
     this.walls.enableNormalViz();
-    this.columns.enableNormalViz();
-    
+    this.front_wall.enableNormalViz();
+    this.roof.enableNormalViz();
+    this.columns.enableNormalViz(); 
+    this.roof2.enableNormalViz();
+    this.circle.enableNormalViz();
+
   }
   disableNormalViz(){
-    this.roof.disableNormalViz();
     this.walls.disableNormalViz();
-    this.columns.disableNormalViz();
-    
+    this.front_wall.disableNormalViz();
+    this.roof.disableNormalViz();
+    this.columns.disableNormalViz(); 
+    this.roof2.disableNormalViz();
+    this.circle.disableNormalViz();
   }
 } 
 

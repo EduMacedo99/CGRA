@@ -13,12 +13,12 @@ class MyVoxelHill extends CGFobject {
   }
   enableNormalViz() {
     for(var i = 0; i < this.cube_num; i++)
-      this.cubes[i].enableNormalViz();
+      this.cube.enableNormalViz();
     
   }
   disableNormalViz() {
     for(var i = 0; i < this.cube_num; i++)
-      this.cubes[i].disableNormalViz();
+      this.cube.disableNormalViz();
   }
   display(){
 
