@@ -91,12 +91,12 @@ class MyScene extends CGFscene {
       this.lights[1].setDiffuse(color[0], color[1], color[2], 1.0);
       this.lights[1].setSpecular(color[0], color[1], color[2], 1.0);
       this.lights[1].setAmbient(color[0], color[1], color[2], 1);
-      this.lights[1].setLinearAttenuation(0.05);
+      this.lights[1].setLinearAttenuation(0.1);
       this.lights[1].enable();
       this.lights[1].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 350, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 5, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 350, vec3.fromValues(100, 50, 50), vec3.fromValues(0, 5, 0));
     }
     initMaterials() {
         //Materials
@@ -314,7 +314,7 @@ class MyScene extends CGFscene {
 
         this.pushMatrix();
         this.scale(2.5,2.5,2.5);
-        this.translate(12,0.5,4);
+        this.translate(18.5,0.5,0);
         this.rock.display();
         this.popMatrix();
 
