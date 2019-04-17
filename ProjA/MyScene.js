@@ -234,7 +234,7 @@ class MyScene extends CGFscene {
         this.popMatrix();
 
         this.pushMatrix();
-        this.translate(50,0,45);
+        this.translate(50,-1,45);
         this.scale(2,2,2);
         this.hill2.display();
         this.popMatrix();
@@ -253,7 +253,7 @@ class MyScene extends CGFscene {
         this.popMatrix();
 
         this.pushMatrix();
-        this.translate(-40,0,15);
+        this.translate(-40,-1,15);
         this.scale(2,2,2);
         this.hill.display();
         this.popMatrix();
