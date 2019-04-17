@@ -7,7 +7,9 @@ class MyVoxelHill extends CGFobject {
 	constructor(scene, levels) {
     super(scene);
     this.levels = levels;
-    this.cube_num = 0;
+    this.cube_num = 1;
+    for(var i = 0; i < this.levels; i++)
+      this.cube_num += 2*i +1*4 - 4;
 
     this.cube = new MyUnitCubeQuad(this.scene, 'textures/grass.jpg', 'textures/grass.jpg', 'textures/grass.jpg');  
   }
@@ -47,10 +49,7 @@ class MyVoxelHill extends CGFobject {
         this.cube.display();
         this.scene.popMatrix();
       }
-      this.cube_num += 4*sideSize - 4;
     }    
-    this.cube_num++; //first cube
-
   }
 }
 

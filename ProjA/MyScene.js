@@ -23,15 +23,12 @@ class MyScene extends CGFscene {
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.pyramid = new MyPyramid(this, 4, 5, 2);
-        this.prism = new MyPrism(this, 5, 5, 2);
-        this.cylinder = new MyCylinder(this, 10, 1, 0.5);
+        this.cylinder = new MyCylinder(this, 10, 3, 0.5);
         this.cube = new MyUnitCube(this);
-        this.tree = new MyTree(this, 10, 2.5, 0.6, 0.7, 3);
-        this.cone = new MyCone(this, 10, false, 0.5, 0.5);
+        this.cone = new MyCone(this, 10, false, 1.5, 0.5);
         this.treeGroupPatch = new MyTreeGroupPatch(this, 3, 4, 3, 0, 0);
         this.treeRow = new MyTreeRow(this, 5, 5, 3, 0, 0);
-        this.plane = new MyQuad(this, [0, 2, 2, 2, 0, 0, 2, 0]);
+        this.plane = new MyQuad(this, [0, 10, 10, 10, 0, 0, 10, 0]);
         this.treerow = new MyTreeRow(this, 6, 3, 0, 0);
         this.house = new MyHouse(this);
         this.hill = new MyVoxelHill(this, 3);
@@ -43,20 +40,17 @@ class MyScene extends CGFscene {
         this.fireplace = new MyPyramid(this, 4, 2, 1.5);
         this.fireplace2 = new MyPyramid(this, 4, 3, 1.5);
         this.quad = new MyQuad(this);
-        this.rock = new MyUnitCubeQuad(this, 'textures/rock.jpg', 'textures/rock.jpg', 'textures/rock.jpg');
-
 
         //Objects connected to MyInterface
         this.displayAxis = true;
         this.displayNormals = false;
         this.displaySkybox = true;
         this.displayGrass = true;
-        this.selectedObject = 7;
-        this.objects = [this.pyramid, this.prism, this.cone, this.cylinder, this.tree, this.treeRow, this.treeGroupPatch, this.house, this.hill];
-
-        // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Pyramid': 0, 'Prism': 1, 'Cone': 2, 'Cylinder': 3, 'Tree': 4, 'Tree Row': 5, 'Tree Group Patch': 6, 'House': 7, 'Hill': 8 };
+        this.toggleNight = false;
+        this.toggleFire = false;
+        this.scaleFactor = 1;
               
+        this.random_value = Math.random();
     }
     hexToRgbA(hex){
       var ret;
@@ -80,20 +74,27 @@ class MyScene extends CGFscene {
     }
     initLights() {
       this.lights[0].setPosition(100, 200, -75, 1);
-      this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
-      this.lights[0].setAmbient(0.6, 0.6, 0.6, 1);
-      this.lights[0].setSpecular(1.0, 1.0, 1.0, 1.0);
-      //this.lights[0].enable();
+      this.lights[0].setDiffuse(1.0, 1.0, 0.9, 1.0);
+      this.lights[0].setAmbient(0.8, 0.8, 0.7, 1);
+      this.lights[0].setSpecular(1.0, 1.0, 0.9, 1.0);
+      this.lights[0].enable();
       this.lights[0].update();
 
-      var color = this.hexToRgbA('#d54801');
-      this.lights[1].setPosition(30.75, 4, -0.75, 1);
-      this.lights[1].setDiffuse(color[0], color[1], color[2], 1.0);
-      this.lights[1].setSpecular(color[0], color[1], color[2], 1.0);
-      this.lights[1].setAmbient(color[0], color[1], color[2], 1);
-      this.lights[1].setLinearAttenuation(0.05);
-      this.lights[1].enable();
+      this.lights[1].setPosition(100, 200, -75, 1);
+      this.lights[1].setDiffuse(0.5, 0.5, 0.7, 1.0);
+      this.lights[1].setAmbient(0.4, 0.4, 0.6, 1);
+      this.lights[1].setSpecular(0.5, 0.5, 0.7, 1.0);
+      this.lights[1].disable();
       this.lights[1].update();
+
+      var color = this.hexToRgbA('#d54801');
+      this.lights[2].setPosition(30.75, 4, -0.75, 1);
+      this.lights[2].setDiffuse(color[0], color[1], color[2], 1.0);
+      this.lights[2].setSpecular(color[0], color[1], color[2], 1.0);
+      this.lights[2].setAmbient(color[0], color[1], color[2], 1);
+      this.lights[2].setQuadraticAttenuation(0.01);
+      this.lights[2].disable();
+      this.lights[2].update();
     }
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 350, vec3.fromValues(50, 50, 50), vec3.fromValues(0, 5, 0));
@@ -146,6 +147,13 @@ class MyScene extends CGFscene {
         this.water.loadTexture('textures/water.jpg');
         this.water.setTextureWrap('REPEAT', 'REPEAT');
 
+        this.rock = new CGFappearance(this);
+        this.rock.setAmbient(0.4, 0.4, 0.4, 1);
+        this.rock.setDiffuse(1, 1, 1, 1);
+        this.rock.setSpecular(0, 0, 0, 1);
+        this.rock.setShininess(10.0);
+        this.rock.loadTexture('textures/rock.jpg');
+        this.rock.setTextureWrap('REPEAT', 'REPEAT');
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -171,51 +179,31 @@ class MyScene extends CGFscene {
         //Apply default appearance
         this.setDefaultAppearance();
 
+        // Handle lights
+        if (this.toggleNight){
+          this.lights[1].enable();
+          this.lights[0].disable();
+        }
+        else {
+          this.lights[1].disable();
+          this.lights[0].enable();
+        }
+
+        if (this.toggleFire)
+          this.lights[2].enable();
+        else 
+          this.lights[2].disable();
+
         this.lights[0].update();
         this.lights[1].update();
+        this.lights[2].update();
 
-        // ---- BEGIN Primitive drawing section
-       // this.translate(0, -98, 0);
+        // ---- BEGIN Primitive drawing section        
+
+        this.pushMatrix();
+
+        this.scale(this.scaleFactor,this.scaleFactor,this.scaleFactor);
         
-        
-/*        if (this.displayNormals)
-        this.objects[this.selectedObject].enableNormalViz();
-        else
-        this.objects[this.selectedObject].disableNormalViz();
-        
-        this.objects[this.selectedObject].display();
-
-        if(this.displayGrass){
-          this.pushMatrix();
-          this.scale(150, 1, 150);
-          this.rotate(-Math.PI/2, 1, 0, 0);
-          this.translate(-0.5, -0.5, 0);
-          this.grass.apply();
-          this.plane.display();
-          //
-          this.translate(1, 0, 0);
-          this.plane.display();
-          this.translate(0, 1, 0);
-          this.plane.display();
-          this.translate(-1, 0, 0);
-          this.plane.display();
-          //
-          this.popMatrix();
-        }
-        //this.translate(0, 98, 0);
-
-        if (this.displaySkybox){
-          this.skybox_t.apply();
-          this.skybox.display();
-        }
-        if (this.displayNormals)
-          this.skybox.enableNormalViz();
-        else
-          this.skybox.disableNormalViz();
-         
-
-
-        // ---- END Primitive drawing section*/
         this.pushMatrix();
         this.pushMatrix();
         this.translate(-1, 0, -2);
@@ -240,7 +228,7 @@ class MyScene extends CGFscene {
         this.pushMatrix();
         this.translate(-12,0,-22);
         this.treeRow.display();
-        this.translate(0,0,44);
+        this.translate(0,0,48);
         this.treeRow.display();
         this.popMatrix();
 
@@ -259,7 +247,6 @@ class MyScene extends CGFscene {
         this.pushMatrix();
         this.pushMatrix();
         this.translate(30,0,0);
-        //this.rotate(Math.PI/4,0,1,0);
 
         this.fire_2.apply();
 
@@ -301,9 +288,8 @@ class MyScene extends CGFscene {
         this.pushMatrix();
         this.translate(0, 0.5, 37.25);
         this.pushMatrix();
-        this.scale(1, 3, 1);
         this.cylinder.display();
-        this.translate(0, 1, 0);
+        this.translate(0, 3, 0);
         this.cone.display();
         this.popMatrix();
         this.water.apply();
@@ -312,28 +298,35 @@ class MyScene extends CGFscene {
         this.quad.display();
         this.popMatrix();
 
+        //rocks
         this.pushMatrix();
+        this.rock.apply();
         this.scale(2.5,2.5,2.5);
-        this.translate(12,0.5,4);
-        this.rock.display();
+        this.translate(12,-0.2,4);
+        this.rotate(Math.PI*this.random_value*100, 1, 1, 1);
+        this.cube.display();
         this.popMatrix();
 
+        this.pushMatrix();
+        this.scale(2.5,2.5,2.5);
+        this.translate(5,-0.2,-15);
+        this.rotate(Math.PI*((this.random_value*10000) % 10), 1, 1, 1);
+        this.cube.display();
+        this.popMatrix();
+
+        this.pushMatrix();
+        this.scale(2.5,2.5,2.5);
+        this.translate(-15,-0.2,-5);
+        this.rotate(Math.PI*((this.random_value*1000000) % 10), 1, 1, 1);
+        this.cube.display();
+        this.popMatrix();
 
         if(this.displayGrass){
           this.pushMatrix();
-          this.scale(100, 1, 100);
+          this.scale(150, 1, 150  );
           this.rotate(-Math.PI/2, 1, 0, 0);
-          this.translate(-0.5, -0.5, 0);
           this.grass.apply();
           this.plane.display();
-          //
-          this.translate(1, 0, 0);
-          this.plane.display();
-          this.translate(0, 1, 0);
-          this.plane.display();
-          this.translate(-1, 0, 0);
-          this.plane.display();
-          //
           this.popMatrix();
         }
         this.translate(0, 73, 0);
@@ -342,12 +335,12 @@ class MyScene extends CGFscene {
           this.skybox_t.apply();
           this.skybox.display();
         }
+
+        this.popMatrix();
+
         if (this.displayNormals){
-          this.pyramid.enableNormalViz();
-          this.prism.enableNormalViz();
           this.cylinder.enableNormalViz();
           this.cube.enableNormalViz();
-          this.tree.enableNormalViz();
           this.cone.enableNormalViz();
           this.treeGroupPatch.enableNormalViz();
           this.treeRow.enableNormalViz();
@@ -366,11 +359,8 @@ class MyScene extends CGFscene {
   
         }
         else{
-          this.pyramid.disableNormalViz();
-          this.prism.disableNormalViz();
           this.cylinder.disableNormalViz();
           this.cube.disableNormalViz();
-          this.tree.disableNormalViz();
           this.cone.disableNormalViz();
           this.treeGroupPatch.disableNormalViz();
           this.treeRow.disableNormalViz();

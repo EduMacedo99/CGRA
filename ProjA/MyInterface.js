@@ -20,10 +20,11 @@ class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'displayNormals').name("Display normals");
         this.gui.add(this.scene, 'displayGrass').name("Display Grass");
         this.gui.add(this.scene, 'displaySkybox').name("Display Skybox");
+        this.gui.add(this.scene, 'toggleNight').name("Toggle Night");
+        this.gui.add(this.scene, 'toggleFire').name("Toggle Fire");
 
-
-        this.gui.add(this.scene, 'selectedObject', this.scene.objectIDs).name('Selected Object');
-
+        
+        this.gui.add(this.scene, 'scaleFactor', 0.1, 10.0).name('Scale');
 
         return true;
     }
