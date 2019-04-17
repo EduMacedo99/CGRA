@@ -31,12 +31,12 @@ class MyScene extends CGFscene {
         this.plane = new MyQuad(this, [0, 10, 10, 10, 0, 0, 10, 0]);
         this.treerow = new MyTreeRow(this, 6, 3, 0, 0);
         this.house = new MyHouse(this);
-        this.hill = new MyVoxelHill(this, 3);
+        this.hill = new MyVoxelHill(this, 3, 'textures/stone.jpg');
         this.skybox = new MyCubeMap(this, 150);
 
         this.treeGroupPatch2 = new MyTreeGroupPatch(this, 5, 6, 4, 0, 0);
         this.treeRow2 = new MyTreeRow(this, 10, 5, 3, 0, 0);
-        this.hill2 = new MyVoxelHill(this, 10);
+        this.hill2 = new MyVoxelHill(this, 10, 'textures/stone.jpg');
         this.fireplace = new MyPyramid(this, 4, 2, 1.5);
         this.fireplace2 = new MyPyramid(this, 4, 3, 1.5);
         this.quad = new MyQuad(this);
@@ -98,7 +98,7 @@ class MyScene extends CGFscene {
       this.lights[2].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 350, vec3.fromValues(100, 50, 50), vec3.fromValues(0, 5, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 350, vec3.fromValues(-150, 100, 150), vec3.fromValues(0, 25, 0));
     }
     initMaterials() {
         //Materials
@@ -142,8 +142,8 @@ class MyScene extends CGFscene {
 
         this.marble = new CGFappearance(this);
         this.marble.setAmbient(0.4, 0.4, 0.4, 1);
-        this.marble.setDiffuse(1, 1, 1, 1);
-        this.marble.setSpecular(0, 0, 0, 1);
+        this.marble.setDiffuse(0, 0, 0, 1);
+        this.marble.setSpecular(0.8, 0.8, 0.8, 1);
         this.marble.setShininess(10.0);
         this.marble.loadTexture('textures/marble.jpg');
         this.marble.setTextureWrap('REPEAT', 'REPEAT');
