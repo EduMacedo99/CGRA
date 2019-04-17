@@ -72,36 +72,7 @@ disableNormalViz() {
     this.columns.disableNormalViz();
 }
 
-display(){
-  /*
-  this.scene.pushMatrix();
-  this.scene.scale(7,5.3,7);
-  this.scene.pushMatrix();
-  this.scene.translate(0,1,0);
-  this.scene.rotate(Math.PI/4,0,1,0);
-  this.roof.display();
-  this.scene.rotate(Math.PI/4, 0,1,0);
-  this.scene.translate(0,-0.5,0);
-  this.walls.display();   
-  tis.scene.popMatrix();
-  this.scene.pushMatrix();
-  this.scene.translate(0.6,0,0.6);;
-  this.columns.display();
-  this.scene.translate(0,0,-10.2);
-  this.columns.display();
-  this.scene.translate(-10.2,0,0);
-  this.columns.display();
-  this.scene.translate(0,0,10.2);
-  this.columns.display();
-  this.scene.popMatrix();
-  this.scene.pushMatrix();
-  
-  this.scene.translate(0.5,0,0);
-  this.scene.rotate(Math.PI/4,0,1,0);
-  this.balcony.display();
-  this.scene.popMatrix();
-  this.scene.popMatrix();*/
-  
+display(){  
   this.scene.pushMatrix();
 
   this.scene.scale(0.7,0.7,0.7);
@@ -202,7 +173,7 @@ display(){
   this.scene.rotate(Math.PI/4,0,1,0);
   this.roof2.display();
   
-  this.scene.translate(4.22,0,4.22);
+  this.scene.translate(4.25,0,4.25);
   this.roof2.display();
   this.scene.popMatrix();
 

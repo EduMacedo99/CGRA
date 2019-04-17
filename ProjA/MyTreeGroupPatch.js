@@ -13,8 +13,8 @@ class MyTreeGroupPatch extends CGFobject {
         var radius = 0;
         var heightRatio = 0;
         var radiusRatio = 0;
-        var x = 0;
-        var z = 0;
+        this.x = [];
+        this.z = [];
 
         for(var i = 0; i < n_trees_in_file; i++){
           for(var j = 0; j < n_trees_in_file; j++){
@@ -24,17 +24,20 @@ class MyTreeGroupPatch extends CGFobject {
             radiusRatio = 2 + 0.1 * ((random * 100000) % 11);
             height = max_tree_height - 0.2*((random * 10000) % 7);
             radius = block_width/(2.01*radiusRatio) - ((random * 10) % 7)/ (block_width*radiusRatio);
-            x = x_init + i * block_width + radius*radiusRatio + (block_width/2 - radius*radiusRatio)/(((random * 100) % 9) + 1); //avoid dividing by 0
-            z = z_init + j * block_width + radius*radiusRatio + (block_width/2 - radius*radiusRatio)/(((random * 1000) % 9) + 1);
+            this.x.push(x_init + i * block_width + radius*radiusRatio + (block_width/2 - radius*radiusRatio)/(((random * 100) % 9) + 1)); //avoid dividing by 0
+            this.z.push(z_init + j * block_width + radius*radiusRatio + (block_width/2 - radius*radiusRatio)/(((random * 1000) % 9) + 1));
             
-            this.trees.push(new MyTree(this.scene, 10, height, radius, heightRatio, radiusRatio, x, 0, z));
+            this.trees.push(new MyTree(this.scene, height*heightRatio, radius*(1/radiusRatio), height*(1/heightRatio), radius*radiusRatio, 'textures/bark.jpg', 'textures/pine.jpg'));
           }
         }    
 
     }
     display(){
       for(var i = 0; i < this.n_trees; i++){
+        this.scene.pushMatrix();
+        this.scene.translate(this.x[i], 0, this.z[i]);
         this.trees[i].display();
+        this.scene.popMatrix();
       }
     }
     enableNormalViz(){
