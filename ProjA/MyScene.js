@@ -48,6 +48,7 @@ class MyScene extends CGFscene {
         this.displayGrass = true;
         this.toggleNight = false;
         this.toggleFire = false;
+        this.textures = true;
         this.scaleFactor = 1;
               
         this.random_value = Math.random();
@@ -171,6 +172,11 @@ class MyScene extends CGFscene {
         this.loadIdentity();
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
+
+        if(this.textures) 
+        this.enableTextures(true);
+        else 
+        this.enableTextures(false);
 
         // Draw axis
         if (this.displayAxis)

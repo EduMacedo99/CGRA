@@ -18,6 +18,7 @@ class MyInterface extends CGFinterface {
 
         this.gui.add(this.scene, 'displayAxis').name("Display axis");
         this.gui.add(this.scene, 'displayNormals').name("Display normals");
+        this.gui.add(this.scene, 'textures').name("Textures");
         this.gui.add(this.scene, 'displayGrass').name("Display Grass");
         this.gui.add(this.scene, 'displaySkybox').name("Display Skybox");
         this.gui.add(this.scene, 'toggleNight').name("Toggle Night");
