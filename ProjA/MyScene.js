@@ -74,14 +74,14 @@ class MyScene extends CGFscene {
       return ret;
     }
     initLights() {
-      this.lights[0].setPosition(100, 200, -75, 1);
+      this.lights[0].setPosition(75, 95, -45, 1);
       this.lights[0].setDiffuse(1.0, 1.0, 0.9, 1.0);
       this.lights[0].setAmbient(0.8, 0.8, 0.7, 1);
       this.lights[0].setSpecular(1.0, 1.0, 0.9, 1.0);
       this.lights[0].enable();
       this.lights[0].update();
 
-      this.lights[1].setPosition(100, 200, -75, 1);
+      this.lights[1].setPosition(0, 95, 75, 1);
       this.lights[1].setDiffuse(0.5, 0.5, 0.7, 1.0);
       this.lights[1].setAmbient(0.4, 0.4, 0.6, 1);
       this.lights[1].setSpecular(0.5, 0.5, 0.7, 1.0);
@@ -110,13 +110,21 @@ class MyScene extends CGFscene {
         this.grass.loadTexture('textures/grass.jpg');
         this.grass.setTextureWrap('REPEAT', 'REPEAT');
 
-        this.skybox_t = new CGFappearance(this);
-        this.skybox_t.setAmbient(1, 1, 1, 1);
-        this.skybox_t.setDiffuse(1, 1, 1, 1);
-        this.skybox_t.setSpecular(0, 0, 0, 1);
-        this.skybox_t.setShininess(150.0);
-        this.skybox_t.loadTexture('textures/skybox.png');
-        this.skybox_t.setTextureWrap('REPEAT', 'REPEAT');    
+        this.skybox_day = new CGFappearance(this);
+        this.skybox_day.setAmbient(1, 1, 1, 1);
+        this.skybox_day.setDiffuse(1, 1, 1, 1);
+        this.skybox_day.setSpecular(0, 0, 0, 1);
+        this.skybox_day.setShininess(150.0);
+        this.skybox_day.loadTexture('textures/skybox_day.png');
+        this.skybox_day.setTextureWrap('REPEAT', 'REPEAT');    
+
+        this.skybox_night = new CGFappearance(this);
+        this.skybox_night.setAmbient(1, 1, 1, 1);
+        this.skybox_night.setDiffuse(1, 1, 1, 1);
+        this.skybox_night.setSpecular(0, 0, 0, 1);
+        this.skybox_night.setShininess(150.0);
+        this.skybox_night.loadTexture('textures/skybox_night.png');
+        this.skybox_night.setTextureWrap('REPEAT', 'REPEAT');    
 
         var color = this.hexToRgbA('#F60607');
         this.fire_1 = new CGFappearance(this);
@@ -338,7 +346,10 @@ class MyScene extends CGFscene {
         this.translate(0, 73, 0);
 
         if (this.displaySkybox){
-          this.skybox_t.apply();
+          if(this.toggleNight)
+            this.skybox_night.apply();
+          else 
+            this.skybox_day.apply();
           this.skybox.display();
         }
 
