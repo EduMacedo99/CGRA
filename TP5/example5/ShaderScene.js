@@ -84,8 +84,8 @@ class ShaderScene extends CGFscene {
 		this.testShaders[6].setUniformsValues({ uSampler2: 1 });
 		this.testShaders[6].setUniformsValues({ timeFactor: 0 });
 		this.testShaders[10].setUniformsValues({ timeFactor: 0 });
-		this.testShaders[11].setUniformsValues({ uSampler: 2 });
-		this.testShaders[11].setUniformsValues({ uSampler2: 3 });
+		this.testShaders[11].setUniformsValues({ uSampler2: 2 });
+		this.testShaders[11].setUniformsValues({ timeFactor: 0 });
 
 
 		// Shaders interface variables
@@ -182,12 +182,13 @@ class ShaderScene extends CGFscene {
 
 	// called periodically (as per setUpdatePeriod() in init())
 	update(t) {
-		// only shader 6 is using time factor
 		if (this.selectedExampleShader == 6)
 			this.testShaders[6].setUniformsValues({ timeFactor: t / 100 % 1000 });
-    if (this.selectedExampleShader == 10)
-    this.testShaders[10].setUniformsValues({ timeFactor: t / 100 % 1000 });
-	}
+    else if (this.selectedExampleShader == 10)
+      this.testShaders[10].setUniformsValues({ timeFactor: t / 100 % 1000 });
+    else if (this.selectedExampleShader == 11)
+      this.testShaders[11].setUniformsValues({ timeFactor: t / 100 % 1000 });
+  }
 
 	// main display function
 	display() {
@@ -210,7 +211,12 @@ class ShaderScene extends CGFscene {
 		this.axis.display();
 
 		// aplly main appearance (including texture in default texture unit 0)
-		this.appearance.apply();
+		if(this.selectedExampleShader == 11)
+      this.appearance.setTexture(this.water_texture);
+    else 
+      this.appearance.setTexture(this.texture);
+
+    this.appearance.apply();
 
 		// activate selected shader
 		this.setActiveShader(this.testShaders[this.selectedExampleShader]);
@@ -218,9 +224,7 @@ class ShaderScene extends CGFscene {
 
 		// bind additional texture to texture unit 1
 		this.texture2.bind(1);
-
-		this.water_texture.bind(2);
-		this.water_texture_map.bind(3);
+		this.water_texture_map.bind(2);
 
 		//Uncomment following lines in case texture must have wrapping mode 'REPEAT'
 		//this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.REPEAT);
