@@ -14,10 +14,10 @@ void main() {
 		color =  vec4(0.0, 0.0, 1.0, 1.0);
 	}
 
-	vec4 colorSepia = color;
-	colorSepia.r = color.r * 0.299 + color.g *0.587 + color.b * 0.114;
-	colorSepia.g = color.r * 0.299 + color.g *0.587 + color.b * 0.114;
-	colorSepia.b = color.r * 0.299 + color.g *0.587 + color.b * 0.114;
+	vec4 colorGray = vec4 (0.0, 0.0, 0.0, 1.0);
+	colorGray.r = color.r * 0.299 + color.g *0.587 + color.b * 0.114;
+	colorGray.g = color.r * 0.299 + color.g *0.587 + color.b * 0.114;
+	colorGray.b = color.r * 0.299 + color.g *0.587 + color.b * 0.114;
 
-  gl_FragColor = colorSepia;
+  gl_FragColor = colorGray;
 }
