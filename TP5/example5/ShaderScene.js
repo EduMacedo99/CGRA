@@ -74,6 +74,7 @@ class ShaderScene extends CGFscene {
 			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/sepia.frag"),
 			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/convolution.frag"),
 			new CGFshader(this.gl, "shaders/ex1_1.vert", "shaders/ex1_1.frag"),
+			new CGFshader(this.gl, "shaders/ex1_2.vert", "shaders/ex1_2.frag"),
 			new CGFshader(this.gl, "shaders/ex1_3.vert", "shaders/ex1_3.frag"),
 			new CGFshader(this.gl, "shaders/water.vert", "shaders/water.frag")
 		];
@@ -84,8 +85,10 @@ class ShaderScene extends CGFscene {
 		this.testShaders[6].setUniformsValues({ uSampler2: 1 });
 		this.testShaders[6].setUniformsValues({ timeFactor: 0 });
 		this.testShaders[10].setUniformsValues({ timeFactor: 0 });
-		this.testShaders[11].setUniformsValues({ uSampler2: 2 });
-		this.testShaders[11].setUniformsValues({ timeFactor: 0 });
+    this.testShaders[11].setUniformsValues({ timeFactor: 0 });
+    this.testShaders[12].setUniformsValues({ uSampler2: 2 });
+		this.testShaders[12].setUniformsValues({ uSampler3: 3 });
+		this.testShaders[12].setUniformsValues({ timeFactor: 0 });
 
 
 		// Shaders interface variables
@@ -101,8 +104,9 @@ class ShaderScene extends CGFscene {
 			'Sepia': 7,
       'Convolution': 8,
       'Ex1.1' : 9,
-      'Ex1.3' : 10,
-      'Water' : 11
+      'Ex1.2' : 10,
+      'Ex1.3' : 11,
+      'Water' : 12
 		};
 
 		// shader code panels references
@@ -188,6 +192,8 @@ class ShaderScene extends CGFscene {
       this.testShaders[10].setUniformsValues({ timeFactor: t / 100 % 1000 });
     else if (this.selectedExampleShader == 11)
       this.testShaders[11].setUniformsValues({ timeFactor: t / 100 % 1000 });
+    else if (this.selectedExampleShader == 12)
+      this.testShaders[12].setUniformsValues({ timeFactor: t / 100 % 1000 });
   }
 
 	// main display function
@@ -211,11 +217,6 @@ class ShaderScene extends CGFscene {
 		this.axis.display();
 
 		// aplly main appearance (including texture in default texture unit 0)
-		if(this.selectedExampleShader == 11)
-      this.appearance.setTexture(this.water_texture);
-    else 
-      this.appearance.setTexture(this.texture);
-
     this.appearance.apply();
 
 		// activate selected shader
@@ -224,7 +225,8 @@ class ShaderScene extends CGFscene {
 
 		// bind additional texture to texture unit 1
 		this.texture2.bind(1);
-		this.water_texture_map.bind(2);
+		this.water_texture.bind(2);
+		this.water_texture_map.bind(3);
 
 		//Uncomment following lines in case texture must have wrapping mode 'REPEAT'
 		//this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.REPEAT);
