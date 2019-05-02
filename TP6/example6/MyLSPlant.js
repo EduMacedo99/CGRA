@@ -64,7 +64,7 @@ class MyLSPlant extends CGFobject {
                     newString += axiomProductions[0];
                 } else {
                     // sistema estocastico - varias producoes sao aplicaveis - seleciona aleatoriamente
-                    newString += axiomProductions[Math.floor(Math.random() * axiomProductions.length)];                    
+                    newString += axiomProductions[Math.floor(((Math.random() * 10000)) % 1.0 * axiomProductions.length)];                    
                 }
             }
 
