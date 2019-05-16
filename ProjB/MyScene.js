@@ -42,6 +42,21 @@ class MyScene extends CGFscene {
         this.setSpecular(0.2, 0.4, 0.8, 1.0);
         this.setShininess(10.0);
     }
+    checkKeys() {
+      var text="Keys pressed: ";
+      var keysPressed=false;
+      // Check for key codes e.g. in https://keycode.info/
+      if (this.gui.isKeyPressed("KeyW")) {
+        text+=" W ";
+        keysPressed=true;
+      }
+      if (this.gui.isKeyPressed("KeyS")) {
+        text+=" S ";
+        keysPressed=true;
+      }
+      if (keysPressed)
+        console.log(text);
+    }
     update(t){
 
     }
