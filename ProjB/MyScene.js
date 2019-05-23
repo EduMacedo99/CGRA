@@ -28,6 +28,8 @@ class MyScene extends CGFscene {
         this.wing = new MyWing(this);
 
         //Objects connected to MyInterface
+
+        this.setUpdatePeriod(50);
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -61,7 +63,7 @@ class MyScene extends CGFscene {
         console.log(text);
     }
     update(t){
-
+      this.bird.update(t);
     }
 
     display() {
