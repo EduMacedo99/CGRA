@@ -88,8 +88,8 @@ class MyScene extends CGFscene {
         //this.plane.display();
         this.popMatrix();
 
-         this.bird.display();
-        this.wing.display();
+        this.bird.display();
+        //this.wing.display();
         // ---- END Primitive drawing section
     }
 }

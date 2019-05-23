@@ -51,7 +51,9 @@ display(){
 
     this.scene.popMatrix();
 
-    
+    this.scene.translate(0.25, 0.25,-0.25);
+    this.scene.scale(0.5,0.5,0.5);
+    this.wings.display();
     
 
 
