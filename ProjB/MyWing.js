@@ -10,7 +10,7 @@ class MyWing extends CGFobject {
     this.wingAng = 0;
     this.normals = []; 
 
-    this.plane = new MyQuad(this.scene);
+    this.plane = new MySquare(this.scene);
     this.smalltri = new MyTriangle(this.scene);
     
     
