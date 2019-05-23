@@ -21,9 +21,9 @@ class MyBird extends CGFobject {
     
   }
     update(t){
-      this.heightVar = Math.sin((t / 50) * Math.PI/2);
+      this.heightVar = Math.sin((t / 200) * Math.PI/2);
       this.speed *= 0.9;
-      this.wingAng = (this.speed + 1) * Math.sin((t/50) * Math.PI/2);
+      this.wingAng = (this.speed + 1) * Math.sin((t/200) * Math.PI/2);
     }
    
   

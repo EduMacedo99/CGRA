@@ -50,6 +50,7 @@ class MyScene extends CGFscene {
     checkKeys() {
       var text="Keys pressed: ";
       var keysPressed=false;
+
       // Check for key codes e.g. in https://keycode.info/
       if (this.gui.isKeyPressed("KeyW")) {
         text+=" W ";
@@ -63,6 +64,7 @@ class MyScene extends CGFscene {
         console.log(text);
     }
     update(t){
+      this.checkKeys();
       this.bird.update(t);
     }
 
