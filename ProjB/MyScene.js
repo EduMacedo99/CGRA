@@ -10,6 +10,7 @@ class MyScene extends CGFscene {
         super.init(application);
         this.initCameras();
         this.initLights();
+        this.updatePeriod = 50;
 
         //Background color
         this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -19,7 +20,7 @@ class MyScene extends CGFscene {
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
         this.enableTextures(true);
-        this.setUpdatePeriod(50);
+        this.setUpdatePeriod(this.updatePeriod);
 
         //Initialize scene objects
         this.axis = new CGFaxis(this);
@@ -28,18 +29,18 @@ class MyScene extends CGFscene {
         this.wing = new MyWing(this);
 
         //Objects connected to MyInterface
-
+        this.scaleFactor = 1;
 
         //Shaders
         this.terrainShader = new CGFshader(this.gl, "shaders/terrain.vert", "shaders/terrain.frag");
         this.terrainShader.setUniformsValues({ uSampler2: 1 });
         this.terrainShader.setUniformsValues({ uSampler3: 2 });
+        this.terrainShader.setUniformsValues({ normScale: 60.0 });
     
-        this.setUpdatePeriod(50);
         this.initMaterials();
     }
     initMaterials(){
-        this.terrainMap = new CGFtexture(this, "images/heightmap.jpg");
+        this.terrainMap = new CGFtexture(this, "images/heightmap2.jpg");
         this.terrainAlt = new CGFtexture(this, "images/altimetry.png");
         this.terrain = new CGFtexture(this, "images/terrain.jpg");
         this.terrainAp = new CGFappearance(this);
@@ -52,8 +53,8 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(5, 0, 5), vec3.fromValues(0, 0, 0));
-        // this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(45, 45, 45), vec3.fromValues(0, 0, 0));
+        // this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(5, 0, 5), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(45, 45, 45), vec3.fromValues(0, 0, 0));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -86,6 +87,11 @@ class MyScene extends CGFscene {
         keysPressed=true;
         this.bird.turn(false);
       }
+      if (this.gui.isKeyPressed("KeyR")) {
+        text+=" R ";
+        keysPressed=true;
+        this.bird.reset();
+      }
       if (keysPressed)
         console.log(text);
     }
@@ -95,8 +101,8 @@ class MyScene extends CGFscene {
     }
 
     display() {
-        this.terrainMap.bind(1);
-        this.terrainAlt.bind(2);
+      this.terrainAlt.bind(1);
+      this.terrainMap.bind(2);
         // ---- BEGIN Background, camera and axis setup
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -114,16 +120,15 @@ class MyScene extends CGFscene {
         this.setDefaultAppearance();
 
         // ---- BEGIN Primitive drawing section
-        this.pushMatrix();
-        this.rotate(-0.5*Math.PI, 1, 0, 0);
-        this.scale(60, 60, 1);
-        this.popMatrix();
         
         this.bird.display();
         
         this.setActiveShader(this.terrainShader);
         this.terrainAp.apply();
+        this.pushMatrix();
+        this.rotate(-0.5*Math.PI, 1, 0, 0);
         this.plane.display();
+        this.popMatrix();
         this.setActiveShader(this.defaultShader);
 
         // ---- END Primitive drawing section

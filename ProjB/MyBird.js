@@ -12,8 +12,9 @@ class MyBird extends CGFobject {
     this.wingAng = 0.0;
     this.normals = []; 
     this.speed = 0.0;
+    this.speedAdd = 1.0;
     this.x = 0.0;
-    this.y = 0.0;
+    this.y = 12.0;
     this.z = 0.0;
 
     this.cylinder = new MyCylinder(this.scene, 6, 0.6, 0.25);
@@ -24,13 +25,25 @@ class MyBird extends CGFobject {
     this.wings = new MyWing(this.scene);
     
   }
-  update(t){
-    this.heightVar = Math.sin((t / 200) * Math.PI/2)/2;
-    this.speed *= 0.9;
-    this.wingAng = Math.sin((t/200) * (-this.speed - 1) * Math.PI/2);
+  update(t){ // t/200 = 1 sec
+    this.heightVar = Math.sin((t / (10000/this.scene.updatePeriod)) * Math.PI/2)/2;
+
+    if(this.speed < 0.05) this.speed = 0;
+    else this.speed *= 0.9;
+
+    this.wingAng = Math.sin( ((t / ((10000/this.scene.updatePeriod)/2)) * (this.speed/6 + 0.5)) * Math.PI/2 );
 
     this.x += this.speed * Math.sin(this.ang);
     this.z += this.speed * Math.cos(this.ang);
+
+    this.checkPos();
+  }
+  reset(){
+    this.x = 0.0;
+    this.y = 12.0;
+    this.z = 0.0;
+    this.speed = 0.0;
+    this.ang = 0.0;
   }
   turn(v){
     if(v)
@@ -39,16 +52,30 @@ class MyBird extends CGFobject {
       this.ang -= Math.PI / 12;
   }
   accelarate(v){
-    if(v)
-      if(this.speed < 3.0)
-        this.speed += 1;
+    if(v){
+      if(this.speed < 3.0*this.speedAdd)
+        this.speed += this.speedAdd;
+    }
     
-    else
+    else{
       if(this.speed > 0) {
-        this.speed -= 1;
+        this.speed -= this.speedAdd*0.2;
         if(this.speed < 0)
           this.speed = 0;
       }
+    }
+
+  }
+  checkPos(){
+    //ang errado
+    if(this.x > 30 || this.x < -30){
+      this.x -= 2*this.speed * Math.sin(this.ang)
+      this.ang += Math.PI - (this.ang % (Math.PI/2));
+    }
+    if(this.z > 30 || this.z < -30){
+      this.z -= this.speed * Math.cos(this.ang);
+      this.ang += Math.PI - (this.ang % (Math.PI / 2));
+    }
   }
   
   enableNormalViz() {
@@ -64,7 +91,7 @@ class MyBird extends CGFobject {
 
     this.scene.pushMatrix();
 
-    this.scene.translate(this.x, this.heightVar, this.z);
+    this.scene.translate(this.x, this.heightVar + this.y, this.z);
     this.scene.rotate(this.ang, 0, 1, 0);
     this.scene.rotate(Math.PI / 2, 1, 0, 0);
 
