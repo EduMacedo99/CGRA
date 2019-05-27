@@ -28,6 +28,7 @@ class MyScene extends CGFscene {
         this.bird = new MyBird(this);
         this.wing = new MyWing(this);
         this.tree = new MyLSPlant(this);
+        this.lightning = new MyLightning(this);
         this.n_trees = 4;
         this.tree_axioms = []; //Vector for tree axioms
 
@@ -70,6 +71,10 @@ class MyScene extends CGFscene {
         this.leavesTxt.setShininess(10.0);
         this.leavesTxt.loadTexture('images/leaves.jpg');
         this.leavesTxt.setTextureWrap('REPEAT', 'REPEAT');    
+    
+        this.lightningTxt = new CGFappearance(this);
+        this.lightningTxt.setAmbient(1, 1, 1, 1.0);
+        this.lightningTxt.setShininess(150.0);
     
     }
     initLights() {
@@ -141,6 +146,9 @@ class MyScene extends CGFscene {
 
         // Draw axis
         this.axis.display();
+
+
+        this.lightning.display();
 
         //Apply default appearance
         this.setDefaultAppearance();
