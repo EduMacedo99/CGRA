@@ -70,11 +70,11 @@ class MyBird extends CGFobject {
     //ang errado
     if(this.x > 30 || this.x < -30){
       this.x -= 2*this.speed * Math.sin(this.ang)
-      this.ang += Math.PI - (this.ang % (Math.PI/2));
+      this.ang += Math.PI - 2*(this.ang % (Math.PI/2));
     }
     if(this.z > 30 || this.z < -30){
       this.z -= this.speed * Math.cos(this.ang);
-      this.ang += Math.PI - (this.ang % (Math.PI / 2));
+      this.ang += Math.PI - 2*(this.ang % (Math.PI / 2));
     }
   }
   

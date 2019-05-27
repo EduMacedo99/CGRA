@@ -27,6 +27,15 @@ class MyScene extends CGFscene {
         this.plane = new Plane(this, 32);
         this.bird = new MyBird(this);
         this.wing = new MyWing(this);
+        this.tree = new MyLSPlant(this);
+        this.n_trees = 4;
+        this.tree_axioms = []; //Vector for tree axioms
+
+        for(var i = 0; i < this.n_trees; i++){ //get vector values
+          this.tree_axioms.push(this.tree.axiom);
+          this.tree.axiom = "X";
+          this.tree.iterate();
+        }
 
         //Objects connected to MyInterface
         this.scaleFactor = 1;
@@ -45,6 +54,23 @@ class MyScene extends CGFscene {
         this.terrain = new CGFtexture(this, "images/terrain.jpg");
         this.terrainAp = new CGFappearance(this);
         this.terrainAp.setTexture(this.terrain);
+
+        this.branchTxt = new CGFappearance(this);
+        this.branchTxt.setAmbient(0.5, 0.5, 0.5, 1.0);
+        this.branchTxt.setDiffuse(.8, .8, .8, 1.0);
+        this.branchTxt.setSpecular(0, 0, 0, 1.0);
+        this.branchTxt.setShininess(10.0);
+        this.branchTxt.loadTexture('images/branch.jpg');
+        this.branchTxt.setTextureWrap('REPEAT', 'REPEAT');    
+    
+        this.leavesTxt = new CGFappearance(this);
+        this.leavesTxt.setAmbient(0.5, 0.5, 0.5, 1.0);
+        this.leavesTxt.setDiffuse(.8, .8, .8, 1.0);
+        this.leavesTxt.setSpecular(0.8, 0.8, 0.8, 1.0);
+        this.leavesTxt.setShininess(10.0);
+        this.leavesTxt.loadTexture('images/leaves.jpg');
+        this.leavesTxt.setTextureWrap('REPEAT', 'REPEAT');    
+    
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -122,6 +148,15 @@ class MyScene extends CGFscene {
         // ---- BEGIN Primitive drawing section
         
         this.bird.display();
+
+
+        for(var i = 0; i < this.n_trees; i++){
+          this.pushMatrix();
+          this.translate(i * 4, 5, 0);
+          this.tree.axiom = this.tree_axioms[i];
+          this.tree.display();
+          this.popMatrix();
+        }
         
         this.setActiveShader(this.terrainShader);
         this.terrainAp.apply();
