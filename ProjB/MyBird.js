@@ -17,6 +17,7 @@ class MyBird extends CGFobject {
     this.y = 12.0;
     this.z = 0.0;
     this.t = 0;
+    this.invert = false;
 
     this.cylinder = new MyCylinder(this.scene, 6, 0.6, 0.25);
     this.coneHead = new MyCone(this.scene, 6, false, 0.4, 0.25);
@@ -32,12 +33,19 @@ class MyBird extends CGFobject {
     if(this.speed < 0.05) this.speed = 0;
     else this.speed *= 0.9;
 
-    this.wingAng = Math.sin( (t / 1000) * Math.PI * (this.speed / (100000*15*this.speedAdd) + 1));
+    if(this.invert){
+      this.wingAng -= (this.speed/15*this.speedAdd + 1) * (((t - this.t) % 1000) / 1000) * Math.PI/2;
+      if(this.wingAng <= 0) this.invert = false;
+    }
+    else{
+      this.wingAng += (this.speed/15*this.speedAdd + 1) * (((t - this.t) % 1000) / 1000 ) * Math.PI/2;
+      if(this.wingAng >= (Math.PI/2)) this.invert = true;
+    }
 
-    this.x += this.speed * Math.sin(this.ang) * (t - this.t) / 1000;
-    this.z += this.speed * Math.cos(this.ang) * (t - this.t) / 1000;
+    this.x += this.speed * Math.sin(this.ang) * ( (t - this.t) % 1000 ) / 1000;
+    this.z += this.speed * Math.cos(this.ang) * ( (t - this.t) % 1000 ) / 1000;
 
-    this.checkPos();
+    this.checkPos(t);
     this.t = t;
   }
   reset(){
@@ -49,9 +57,9 @@ class MyBird extends CGFobject {
   }
   turn(v){
     if(v)
-      this.ang += Math.PI / 12;
+      this.ang = (this.ang + Math.PI / 12) % (Math.PI*2);
     else 
-      this.ang -= Math.PI / 12;
+      this.ang = (this.ang - Math.PI / 12) % (Math.PI*2);
   }
   accelarate(v){
     if(v){
@@ -68,15 +76,23 @@ class MyBird extends CGFobject {
     }
 
   }
-  checkPos(){
+  checkPos(t){
     //ang errado
-    if(this.x > 30 || this.x < -30){
-      this.ang += 2 * (Math.PI/2 - this.ang % (Math.PI/2));
-      this.x += 2*this.speed * Math.sin(this.ang)
+    if(this.x > 30){
+      this.x -= this.speed * Math.sin(this.ang) * (t - this.t) / 1000;
+      this.ang += Math.PI - 2*(this.ang % (Math.PI/2));
     }
-    if(this.z > 30 || this.z < -30){
+    if(this.x < -30){
+      this.x -= this.speed * Math.sin(this.ang) * (t - this.t) / 1000;
+      this.ang += 2 * (Math.PI/2 - this.ang % (Math.PI/2));
+    }
+    if(this.z > 30){
+      this.z -= this.speed * Math.cos(this.ang) * (t - this.t) / 1000;
+      this.ang += 2 * (Math.PI - this.ang % (Math.PI / 2));
+    }
+    if(this.z < -30){
+      this.z -= this.speed * Math.cos(this.ang) * (t - this.t) / 1000;
       this.ang += 2 * (Math.PI/2 - this.ang % (Math.PI / 2));
-      this.z += this.speed * Math.cos(this.ang);
     }
   }
   
@@ -122,11 +138,11 @@ class MyBird extends CGFobject {
 
     this.scene.translate(0, 0.25,0);
     this.scene.scale(0.5,0.5,0.5);
-    this.scene.rotate(this.wingAng, 0, 1, 0);
+    this.scene.rotate(-this.wingAng, 0, 1, 0);
     this.wings.display();
 
     this.scene.scale(-1,1,1);
-    this.scene.rotate(this.wingAng*2, 0, 1, 0);
+    this.scene.rotate(-this.wingAng*2, 0, 1, 0);
     this.wings.display();
 
     this.scene.popMatrix();

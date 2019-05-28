@@ -8,6 +8,24 @@ class MyLightning extends CGFobject {
         super(scene);
         this.init();
         this.scaleFactor = 0.5;
+        // copia o axioma da cena para iniciar a sequência de desenvolvimento
+        this.axiom = "X";
+
+        // cria as producoes
+        this.productions={
+          "F": [ "FF" ],
+          "X": ["F[-X][X]F[-X]+FX"]                  
+        };
+
+        // angulo de rotacao 25
+        this.angle = 25 * Math.PI / 180;
+
+        // numero de iteracoes
+        this.iterations = 3;
+
+        // escalamento dos elementos dependente do numero de iteracoes
+        this.scale = Math.pow(0.5, this.iterations-1);
+        
         this.light = new CGFlight(this.scene, 1);
         this.light.setSpecular(1.0, 1.0, 1.0, 1.0);
         this.light.setAmbient(0.5, 0.5, 0.5, 1.0);
@@ -26,24 +44,6 @@ class MyLightning extends CGFobject {
             "F": new MyQuad(this.scene),
             "X": new MyQuad(this.scene)
         };
-        // copia o axioma da cena para iniciar a sequência de desenvolvimento
-        this.axiom = "X";
-
-        // cria as producoes
-        this.productions={
-          "F": [ "FF" ],
-          "X": ["F[-X][X]F[-X]+FX"]                  
-        };
-
-        // angulo de rotacao 25
-        this.angle = 25 * Math.PI / 180;
-
-        // numero de iteracoes
-        this.iterations = 3;
-
-        // escalamento dos elementos dependente do numero de iteracoes
-        this.scale = Math.pow(0.5, this.iterations-1);
-
         // desenvolve a sequencia de desenvolvimento do Sistema L
         this.iterate();
     }

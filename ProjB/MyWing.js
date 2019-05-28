@@ -31,7 +31,7 @@ display(){
 
     this.scene.pushMatrix();
 
-    
+    this.scene.rotate(Math.PI/4, 0, 1, 0);
     this.scene.translate(Math.cos(Math.PI/6)/2, 0, - Math.sin(Math.PI/6)/2);
 
     this.scene.pushMatrix();

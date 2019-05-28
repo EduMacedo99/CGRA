@@ -43,9 +43,7 @@ class MyScene extends CGFscene {
 
         //Shaders
         this.terrainShader = new CGFshader(this.gl, "shaders/terrain.vert", "shaders/terrain.frag");
-        this.terrainShader.setUniformsValues({ uSampler2: 1 });
-        this.terrainShader.setUniformsValues({ uSampler3: 2 });
-        this.terrainShader.setUniformsValues({ normScale: 60.0 });
+        this.terrainShader.setUniformsValues({ uSampler2: 1, uSampler3: 2, normScale: 60.0 });
     
         this.initMaterials();
     }
