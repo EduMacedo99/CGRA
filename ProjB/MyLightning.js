@@ -8,6 +8,10 @@ class MyLightning extends CGFobject {
         super(scene);
         this.init();
         this.scaleFactor = 0.5;
+        this.light = new CGFlight(this.scene, 1);
+        this.light.setSpecular(1.0, 1.0, 1.0, 1.0);
+        this.light.setAmbient(0.5, 0.5, 0.5, 1.0);
+        this.light.setDiffuse(0.8, 0.8, 0.8, 1.0);
     }
 
     init(){
@@ -72,18 +76,38 @@ class MyLightning extends CGFobject {
     startAnimation(t){
       this.axiom = "X"; //recriar axioma
       this.iterate();
-      this.depth = this.axiom.length / 10;
+      this.iterateStep = this.depth = this.axiom.length / (1000 / this.scene.updatePeriod);
+      this.startT = t;
+      this.end = false;
+      this.x = 13 - (Math.random() * 100) % 26;
+      this.z = 13 - (Math.random() * 10000) % 26;
+
+      //iluminar
+      this.light.setPosition(this.x, 15.1, this.z);
+      this.light.enable();
+      this.light.update();
+    }
+    update(t){
+      this.depth += this.iterateStep;
+      if((t - this.startT) >= 1000 && !this.end) {
+        this.light.disable();
+        this.light.update();
+        this.end = true;
+      }
     }
     display(){
+        this.light.update();
         this.scene.pushMatrix();
+        this.scene.translate(this.x, 15, this.z);
+        this.scene.rotate(Math.PI, 0, 0, 1);
         this.scene.scale(this.scale, this.scale, this.scale);
 
-        var i;
+        var i, depth = this.depth;
         this.scene.lightningTxt.apply();
 
 
         // percorre a cadeia de caracteres
-        for (i=0; i<this.axiom.length; ++i){
+        for (i=0; i<this.axiom.length && !this.end; ++i){
 
             // verifica se sao caracteres especiais
             switch(this.axiom[i]){
@@ -131,7 +155,7 @@ class MyLightning extends CGFobject {
                 default:
                     var primitive=this.grammar[this.axiom[i]];
 
-                    if ( primitive )
+                    if ( primitive  && depth > 0)
                     {           
                         this.scene.pushMatrix();  
                         this.scene.scale(0.25, 2, 1);
@@ -139,6 +163,7 @@ class MyLightning extends CGFobject {
                         primitive.display();
                         this.scene.popMatrix();
                         this.scene.translate(0, 2, 0);
+                        depth--;
                     }
                     break;
             }

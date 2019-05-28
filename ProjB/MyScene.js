@@ -10,7 +10,7 @@ class MyScene extends CGFscene {
         super.init(application);
         this.initCameras();
         this.initLights();
-        this.updatePeriod = 50;
+        this.updatePeriod = 25;
 
         //Background color
         this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -74,6 +74,8 @@ class MyScene extends CGFscene {
     
         this.lightningTxt = new CGFappearance(this);
         this.lightningTxt.setAmbient(1, 1, 1, 1.0);
+        this.lightningTxt.setSpecular(1, 1, 1, 1.0);
+        this.lightningTxt.setDiffuse(1, 1, 1, 1.0);
         this.lightningTxt.setShininess(150.0);
     
     }
@@ -85,7 +87,7 @@ class MyScene extends CGFscene {
     }
     initCameras() {
         // this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(5, 0, 5), vec3.fromValues(0, 0, 0));
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(45, 45, 45), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(40, 80, 40), vec3.fromValues(0, 0, 0));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -93,7 +95,7 @@ class MyScene extends CGFscene {
         this.setSpecular(0.2, 0.4, 0.8, 1.0);
         this.setShininess(10.0);
     }
-    checkKeys() {
+    checkKeys(t) {
       var text="Keys pressed: ";
       var keysPressed=false;
 
@@ -123,12 +125,18 @@ class MyScene extends CGFscene {
         keysPressed=true;
         this.bird.reset();
       }
+      if (this.gui.isKeyPressed("KeyL")) {
+        text+=" L ";
+        keysPressed=true;
+        this.lightning.startAnimation(t);
+      }
       if (keysPressed)
         console.log(text);
     }
     update(t){
-      this.checkKeys();
+      this.checkKeys(t);
       this.bird.update(t);
+      this.lightning.update(t);
     }
 
     display() {
@@ -148,16 +156,16 @@ class MyScene extends CGFscene {
         this.axis.display();
 
 
-        this.lightning.display();
-
+        
         //Apply default appearance
         this.setDefaultAppearance();
-
+        
         // ---- BEGIN Primitive drawing section
         
         this.bird.display();
-
-
+        
+        this.lightning.display();
+        
         for(var i = 0; i < this.n_trees; i++){
           this.pushMatrix();
           this.translate(i * 4, 5, 0);
