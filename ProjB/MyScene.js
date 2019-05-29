@@ -187,7 +187,7 @@ class MyScene extends CGFscene {
         this.bird.display();
         
         this.pushMatrix();
-        this.translate(-14,4.6,0.5);
+        this.translate(-14,4.7,0.5);
         this.nest.display();
         this.popMatrix();
 
