@@ -19,7 +19,8 @@ class MyBird extends CGFobject {
     this.z = 0.0;
     this.t = 0;
     this.invert = false;
-
+    this.pickUp = false;
+    
     this.cylinder = new MyCylinder(this.scene, 6, 0.6, 0.25);
     this.coneHead = new MyCone(this.scene, 6, false, 0.4, 0.25);
     this.coneTail = new MyCone(this.scene, 6, false, 0.7, 0.25);
@@ -27,6 +28,7 @@ class MyBird extends CGFobject {
     this.eyes = new MyPyramid(this.scene, 4, 0.08, 0.1);
     this.wings = new MyWing(this.scene);
     this.branch = 0;
+    this.branch_index = 0;
     
   }
   update(t){
@@ -49,6 +51,26 @@ class MyBird extends CGFobject {
     this.z += this.speed * Math.cos(this.ang) * ( (t - this.t) % 1000 ) / 1000;
 
     this.checkPos(t);
+    
+    if(this.pickUp){
+      if(this.down){
+        if(this.y > 5) this.y -= 7.4 * ( (t - this.t) % 1000 ) / 1000;
+        else this.down = false;
+      }
+      else{
+        if(this.y < 11.9) this.y += 7.4 * ( (t - this.t) % 1000 ) / 1000;
+        else{
+          this.pickUp = false;
+          this.y = 12.0;
+        }
+      }
+      if(this.branch == 0)
+        this.checkPickUp(t);
+      else
+        this.checkPutDown(t);
+    }
+
+    
     this.t = t;
   }
   reset(){
@@ -98,42 +120,77 @@ class MyBird extends CGFobject {
       this.ang += 2 * (Math.PI/2 - this.ang % (Math.PI / 2));
     }
   }
-  
-  enableNormalViz() {
-
+  startPickUp(t){
+    if(this.pickUp) return;
+    this.startT = t;
+    this.pickUp = true;
+    this.down = true;
   }
-    
+  checkPickUp(){
+    if(this.y > 5) return;
 
-  disableNormalViz() {
+    var x_dif, z_dif;
 
+    x_dif = this.x + 14;
+    z_dif = this.z - 0.5;
+    if(x_dif > -1.5 && x_dif < 1.5 && z_dif < 1.5 && z_dif > -1.5)
+      return;
+
+    for(var i = 0; i < this.scene.n_branches; i++){
+      x_dif = this.x - this.scene.branches[i].x;
+      z_dif = this.z - this.scene.branches[i].z;
+      if(x_dif > -0.5 && x_dif < 0.5 && z_dif < 1.5 && z_dif > -0.5){
+        this.branch = this.scene.branches[i];
+        this.scene.branches[i] = 0;
+        this.branch_index = i;
+      }
+    }
   }
+  checkPutDown(){
+    if(this.y > 5 || this.branch == 0) return;
+    var x_dif, z_dif;
 
+    x_dif = this.x + 14;
+    z_dif = this.z - 0.5;
+    if(x_dif > -1.5 && x_dif < 1.5 && z_dif < 1.5 && z_dif > -1.5){
+      this.scene.branches[this.branch_index] = this.branch;
+      this.branch = 0;
+    }
+  }
   display(){
-
+    
     this.scene.pushMatrix();
+    
+    
+    this.scene.translate(0, this.heightVar + this.y, 0);
 
-    this.scene.translate(this.x, this.heightVar + this.y, this.z);
+    if(this.branch != 0){
+      this.branch.x = this.x;
+      this.branch.z = this.z - 0.75;
+      this.branch.display();
+    }
+
+    this.scene.setDefaultAppearance();
+
+    this.scene.translate(this.x, 0, this.z);
     this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
     this.scene.rotate(this.ang, 0, 1, 0);
     this.scene.rotate(Math.PI / 2, 1, 0, 0);
 
-    if(this.branch != 0){
-      this.branch.display();
-    }
 
     this.scene.pushMatrix();
     this.cylinder.display();
-
+    
     this.scene.pushMatrix();
     this.scene.rotate(Math.PI, 1,0,0);
     this.coneTail.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
-
+    
     this.scene.translate(0,0.6,0);
     this.coneHead.display();
-
+    
     this.scene.translate(0,0.4*0.75,0); 
     this.pyramid.display();   
 
@@ -142,7 +199,7 @@ class MyBird extends CGFobject {
     //wings
     
     this.scene.pushMatrix();
-
+    
     this.scene.translate(0, 0.25,0);
     this.scene.scale(0.5,0.5,0.5);
     this.scene.rotate(-this.wingAng, 0, 1, 0);
@@ -151,16 +208,20 @@ class MyBird extends CGFobject {
     this.scene.scale(-1,1,1);
     this.scene.rotate(-this.wingAng*2, 0, 1, 0);
     this.wings.display();
-
+    
     this.scene.popMatrix();
-
+    
     this.scene.popMatrix();
-
-
+    
+    
     this.scene.popMatrix();
-
+    
   }
-
-
-} 
+  enableNormalViz() {
+  
+  }  
+  disableNormalViz() {
+  
+  }  
+}   
 

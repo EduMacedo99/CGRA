@@ -33,7 +33,6 @@ class MyScene extends CGFscene {
         this.tree_axioms = []; //Vector for tree axioms
         this.branches = [];
         this.n_branches = 6;
-        this.branch = new MyTreeBranch(this);
         
         for(var i = 0; i < this.n_trees; i++){ //get vector values
           this.tree_axioms.push(this.tree.axiom);
@@ -42,7 +41,8 @@ class MyScene extends CGFscene {
         }
 
         for(var i = 0; i < this.n_branches; i++){
-          // this.branches.push(new MyTreeBranch(this, Math.random))
+          var rand = Math.random();
+          this.branches.push(new MyTreeBranch(this, (rand * 100) % 10, 9 - (rand * 10000) % 18));
         }
 
         //Objects connected to MyInterface
@@ -99,8 +99,7 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        // this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(5, 0, 5), vec3.fromValues(0, 0, 0));
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(40, 80, 40), vec3.fromValues(0, 0, 0));
+      this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(40, 80, 40), vec3.fromValues(0, 0, 0));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -138,6 +137,11 @@ class MyScene extends CGFscene {
         keysPressed=true;
         this.bird.reset();
       }
+      if (this.gui.isKeyPressed("KeyP")) {
+        text+=" P ";
+        keysPressed=true;
+        this.bird.startPickUp();
+      }
       if (this.gui.isKeyPressed("KeyL")) {
         text+=" L ";
         keysPressed=true;
@@ -161,6 +165,7 @@ class MyScene extends CGFscene {
 
       this.terrainAlt.bind(1);
       this.terrainMap.bind(2);
+
         // ---- BEGIN Background, camera and axis setup
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -185,13 +190,14 @@ class MyScene extends CGFscene {
         
         this.lightning.display();
         
+        this.pushMatrix();
+        this.translate(-17, 4, -12)
         for(var i = 0; i < this.n_trees; i++){
-          this.pushMatrix();
-          this.translate(i * 4, 5, 0);
           this.tree.axiom = this.tree_axioms[i];
           this.tree.display();
-          this.popMatrix();
+          this.translate(0, 0, 4);
         }
+        this.popMatrix();
         
         this.setActiveShader(this.terrainShader);
         this.terrainAp.apply();
@@ -201,6 +207,13 @@ class MyScene extends CGFscene {
         this.popMatrix();
         this.setActiveShader(this.defaultShader);
 
+        this.pushMatrix();
+        this.translate(0, 4.7, 0);
+        for(var i = 0; i < this.n_branches; i++){
+          if(this.branches[i] != 0)
+            this.branches[i].display();
+        }
+        this.popMatrix();
         // ---- END Primitive drawing section
     }
 }

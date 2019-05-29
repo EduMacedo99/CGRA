@@ -133,7 +133,7 @@ class MyLSPlant extends CGFobject {
                         else if(this.axiom[i] == "X"){
                           this.scene.leavesTxt.apply();
                           this.scene.pushMatrix();
-                          this.scene.scale(2, 1, 2);
+                          this.scene.scale(2, 2, 2);
                           primitive.display();
                           this.scene.popMatrix();
                         }
