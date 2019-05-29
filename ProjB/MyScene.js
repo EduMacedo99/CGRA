@@ -154,7 +154,7 @@ class MyScene extends CGFscene {
 
     display() {
       if(this.thirdPerson){ //third person settings
-        this.camera.setPosition([this.bird.x, this.bird.y+10, this.bird.z-16]);
+        this.camera.setPosition([this.bird.x, this.bird.y+20, this.bird.z-32]);
         this.camera.setTarget([this.bird.x, this.bird.y, this.bird.z]);
         this.camera.orbit([0, 1, 0], this.bird.ang);
       }
@@ -181,27 +181,26 @@ class MyScene extends CGFscene {
         
         // ---- BEGIN Primitive drawing section
         
-        // this.bird.display();
+        this.bird.display();
         
-        // this.lightning.display();
+        this.lightning.display();
         
-        // for(var i = 0; i < this.n_trees; i++){
-        //   this.pushMatrix();
-        //   this.translate(i * 4, 5, 0);
-        //   this.tree.axiom = this.tree_axioms[i];
-        //   this.tree.display();
-        //   this.popMatrix();
-        // }
+        for(var i = 0; i < this.n_trees; i++){
+          this.pushMatrix();
+          this.translate(i * 4, 5, 0);
+          this.tree.axiom = this.tree_axioms[i];
+          this.tree.display();
+          this.popMatrix();
+        }
         
-        // this.setActiveShader(this.terrainShader);
-        // this.terrainAp.apply();
-        // this.pushMatrix();
-        // this.rotate(-0.5*Math.PI, 1, 0, 0);
-        // this.plane.display();
-        // this.popMatrix();
-        // this.setActiveShader(this.defaultShader);
+        this.setActiveShader(this.terrainShader);
+        this.terrainAp.apply();
+        this.pushMatrix();
+        this.rotate(-0.5*Math.PI, 1, 0, 0);
+        this.plane.display();
+        this.popMatrix();
+        this.setActiveShader(this.defaultShader);
 
-        this.branch.display();
         // ---- END Primitive drawing section
     }
 }
