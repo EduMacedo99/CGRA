@@ -76,7 +76,6 @@ class MyLightning extends CGFobject {
     startAnimation(t){
       this.axiom = "X"; //recriar axioma
       this.iterate();
-      this.iterateStep = this.depth = this.axiom.length / (1000 / this.scene.updatePeriod);
       this.startT = t;
       this.end = false;
       this.x = 13 - (Math.random() * 100) % 26;
@@ -88,7 +87,7 @@ class MyLightning extends CGFobject {
       this.light.update();
     }
     update(t){
-      this.depth += this.iterateStep;
+      this.depth = this.axiom.length * (t - this.startT) / 1000;
       if((t - this.startT) >= 1000 && !this.end) {
         this.light.disable();
         this.light.update();

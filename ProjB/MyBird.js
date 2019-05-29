@@ -9,7 +9,7 @@ class MyBird extends CGFobject {
     
     this.heightVar = 0.0;
     this.ang = 0.0;
-    this.wingAng = 0.0;
+    this.wingAng = Math.PI/2;
     this.normals = []; 
     this.speed = 0.0;
     this.speedAdd = 1.0;
@@ -28,16 +28,17 @@ class MyBird extends CGFobject {
     
   }
   update(t){
-    this.heightVar = Math.sin( ((t / 1000 ) * Math.PI) + Math.PI ) / 2;
-
+    
     if(this.speed < 0.05) this.speed = 0;
     else this.speed *= 0.9;
-
+    
     if(this.invert){
+      this.heightVar -= ((t - this.t) % 1000) / 2000;
       this.wingAng -= (this.speed/15*this.speedAdd + 1) * (((t - this.t) % 1000) / 1000) * Math.PI/2;
       if(this.wingAng <= 0) this.invert = false;
     }
     else{
+      this.heightVar += ((t - this.t) % 1000) / 2000;
       this.wingAng += (this.speed/15*this.speedAdd + 1) * (((t - this.t) % 1000) / 1000 ) * Math.PI/2;
       if(this.wingAng >= (Math.PI/2)) this.invert = true;
     }
