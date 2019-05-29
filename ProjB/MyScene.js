@@ -21,7 +21,7 @@ class MyScene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
         this.enableTextures(true);
         this.setUpdatePeriod(this.updatePeriod);
-
+        
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.plane = new Plane(this, 32);
@@ -31,15 +31,22 @@ class MyScene extends CGFscene {
         this.lightning = new MyLightning(this);
         this.n_trees = 4;
         this.tree_axioms = []; //Vector for tree axioms
-
+        this.branches = [];
+        this.n_branches = 6;
+        this.branch = new MyTreeBranch(this);
+        
         for(var i = 0; i < this.n_trees; i++){ //get vector values
           this.tree_axioms.push(this.tree.axiom);
           this.tree.axiom = "X";
           this.tree.iterate();
         }
 
+        for(var i = 0; i < this.n_branches; i++){
+          // this.branches.push(new MyTreeBranch(this, Math.random))
+        }
+
         //Objects connected to MyInterface
-        this.scaleFactor = 1;
+        this.thirdPerson = false;
 
         //Shaders
         this.terrainShader = new CGFshader(this.gl, "shaders/terrain.vert", "shaders/terrain.frag");
@@ -61,6 +68,14 @@ class MyScene extends CGFscene {
         this.branchTxt.setShininess(10.0);
         this.branchTxt.loadTexture('images/branch.jpg');
         this.branchTxt.setTextureWrap('REPEAT', 'REPEAT');    
+    
+        this.branchEndTxt = new CGFappearance(this);
+        this.branchEndTxt.setAmbient(0.5, 0.5, 0.5, 1.0);
+        this.branchEndTxt.setDiffuse(.8, .8, .8, 1.0);
+        this.branchEndTxt.setSpecular(0, 0, 0, 1.0);
+        this.branchEndTxt.setShininess(10.0);
+        this.branchEndTxt.loadTexture('images/wood_end.jpg');
+        this.branchEndTxt.setTextureWrap('REPEAT', 'REPEAT');    
     
         this.leavesTxt = new CGFappearance(this);
         this.leavesTxt.setAmbient(0.5, 0.5, 0.5, 1.0);
@@ -138,6 +153,12 @@ class MyScene extends CGFscene {
     }
 
     display() {
+      if(this.thirdPerson){ //third person settings
+        this.camera.setPosition([this.bird.x, this.bird.y+10, this.bird.z-16]);
+        this.camera.setTarget([this.bird.x, this.bird.y, this.bird.z]);
+        this.camera.orbit([0, 1, 0], this.bird.ang);
+      }
+
       this.terrainAlt.bind(1);
       this.terrainMap.bind(2);
         // ---- BEGIN Background, camera and axis setup
@@ -160,26 +181,27 @@ class MyScene extends CGFscene {
         
         // ---- BEGIN Primitive drawing section
         
-        this.bird.display();
+        // this.bird.display();
         
-        this.lightning.display();
+        // this.lightning.display();
         
-        for(var i = 0; i < this.n_trees; i++){
-          this.pushMatrix();
-          this.translate(i * 4, 5, 0);
-          this.tree.axiom = this.tree_axioms[i];
-          this.tree.display();
-          this.popMatrix();
-        }
+        // for(var i = 0; i < this.n_trees; i++){
+        //   this.pushMatrix();
+        //   this.translate(i * 4, 5, 0);
+        //   this.tree.axiom = this.tree_axioms[i];
+        //   this.tree.display();
+        //   this.popMatrix();
+        // }
         
-        this.setActiveShader(this.terrainShader);
-        this.terrainAp.apply();
-        this.pushMatrix();
-        this.rotate(-0.5*Math.PI, 1, 0, 0);
-        this.plane.display();
-        this.popMatrix();
-        this.setActiveShader(this.defaultShader);
+        // this.setActiveShader(this.terrainShader);
+        // this.terrainAp.apply();
+        // this.pushMatrix();
+        // this.rotate(-0.5*Math.PI, 1, 0, 0);
+        // this.plane.display();
+        // this.popMatrix();
+        // this.setActiveShader(this.defaultShader);
 
+        this.branch.display();
         // ---- END Primitive drawing section
     }
 }

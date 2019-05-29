@@ -15,8 +15,9 @@ class MyInterface extends CGFinterface {
       
       var obj = this;
 
-      this.gui.add(this.scene, 'scaleFactor', 0.3, 5.0).name('Scale');
-      this.gui.add(this.scene.bird, 'speedAdd', 0.5, 3.0).name('Speed');
+      this.gui.add(this.scene.bird, 'scaleFactor', 0.3, 5.0).name('Scale');
+      this.gui.add(this.scene.bird, 'speedFactor', 0.5, 3.0).name('Speed');
+      this.gui.add(this.scene, 'thirdPerson').name('Third Person Mode');
 
 
       this.initKeys();

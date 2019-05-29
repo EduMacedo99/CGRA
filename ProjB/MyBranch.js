@@ -9,7 +9,7 @@ class MyBranch extends CGFobject {
     
     this.normals = []; 
 
-    this.branch = new MyCylinder(this.scene, 4);
+    this.branch = new MyCylinder(this.scene, 10);
 
   }
   display(){
