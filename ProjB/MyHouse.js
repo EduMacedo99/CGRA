@@ -9,8 +9,8 @@ class MyHouse extends CGFobject {
     
     this.normals = []; 
 
-    this.walls = new MyUnitCubeQuad(this.scene, 'textures/wall_window.jpg', 'textures/wall_window.jpg', 'textures/wall_window.jpg');
-    this.front_wall = new MyUnitCubeQuad(this.scene, 'textures/wall_door.jpg', 'textures/wall_door.jpg', 'textures/wall_door.jpg');
+    this.walls = new MyUnitCubeQuad(this.scene, 'images/wall_window.jpg', 'images/wall_window.jpg', 'images/wall_window.jpg');
+    this.front_wall = new MyUnitCubeQuad(this.scene, 'images/wall_door.jpg', 'images/wall_door.jpg', 'images/wall_door.jpg');
     this.roof = new MyPyramid(this.scene, 4, 1, Math.SQRT2/2 +0.4);
     this.columns = new MyPrism(this.scene, 8, 10, 2.5);
     this.roof2 = new MyPyramid(this.scene, 4, 0.4, Math.SQRT2/2 +0.4);
@@ -31,7 +31,7 @@ class MyHouse extends CGFobject {
     this.columns_tex.setDiffuse(0.8, 0.8, 0.8, 1.0);
     this.columns_tex.setSpecular(0.2, 0.2, 0.2, 1.0);
     this.columns_tex.setShininess(50.0);
-    this.columns_tex.loadTexture('textures/wall_column.jpg');
+    this.columns_tex.loadTexture('images/wall_column.jpg');
     this.columns_tex.setTextureWrap('REPEAT', 'REPEAT');
 
 
@@ -40,7 +40,7 @@ class MyHouse extends CGFobject {
     this.roof_tex.setDiffuse(0.8, 0.8, 0.8, 1.0);
     this.roof_tex.setSpecular(0.2, 0.2, 0.2, 1.0);
     this.roof_tex.setShininess(50.0);
-    this.roof_tex.loadTexture('textures/roof.jpg');
+    this.roof_tex.loadTexture('images/roof.jpg');
     this.roof_tex.setTextureWrap('REPEAT', 'REPEAT');
 
     this.roof2_tex = new CGFappearance(this.scene);
@@ -48,7 +48,7 @@ class MyHouse extends CGFobject {
     this.roof2_tex.setDiffuse(0.8, 0.8, 0.8, 1.0);
     this.roof2_tex.setSpecular(0.2, 0.2, 0.2, 1.0);
     this.roof2_tex.setShininess(50.0);
-    this.roof2_tex.loadTexture('textures/roof_2.jpg');
+    this.roof2_tex.loadTexture('images/roof_2.jpg');
     this.roof2_tex.setTextureWrap('REPEAT', 'REPEAT');
 
     this.roof_under = new CGFappearance(this.scene);
@@ -56,7 +56,7 @@ class MyHouse extends CGFobject {
     this.roof_under.setDiffuse(0.8, 0.8, 0.8, 1.0);
     this.roof_under.setSpecular(0.2, 0.2, 0.2, 1.0);
     this.roof_under.setShininess(50.0);
-    this.roof_under.loadTexture('textures/wall_under.jpg');
+    this.roof_under.loadTexture('images/wall_under.jpg');
     this.roof_under.setTextureWrap('REPEAT', 'REPEAT');
 
   }

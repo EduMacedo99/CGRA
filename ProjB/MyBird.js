@@ -139,7 +139,7 @@ class MyBird extends CGFobject {
     for(var i = 0; i < this.scene.n_branches; i++){
       x_dif = this.x - this.scene.branches[i].x;
       z_dif = this.z - this.scene.branches[i].z;
-      if(x_dif > -0.5 && x_dif < 0.5 && z_dif < 1.5 && z_dif > -0.5){
+      if(x_dif > -1 && x_dif < 1 && z_dif < 1 && z_dif > 0){
         this.branch = this.scene.branches[i];
         this.scene.branches[i] = 0;
         this.branch_index = i;

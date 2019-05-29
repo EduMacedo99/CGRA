@@ -4,7 +4,7 @@
  * @param scene - Reference to MyScene object
  */
 class MyTreeBranch extends CGFobject {
-	constructor(scene, x, z) {
+	constructor(scene, x = 0, z = 0) {
     super(scene);
     
     this.x = x;
