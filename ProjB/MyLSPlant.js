@@ -71,7 +71,7 @@ class MyLSPlant extends CGFobject {
 
     display(){
         this.scene.pushMatrix();
-        this.scene.scale(this.scale, this.scale, this.scale);
+        this.scene.scale(2*this.scale, 2*this.scale, 2*this.scale);
 
         var i;
 
@@ -126,11 +126,17 @@ class MyLSPlant extends CGFobject {
 
                     if ( primitive )
                     {
-                        if(this.axiom[i] == "F")
+                        if(this.axiom[i] == "F"){
                           this.scene.branchTxt.apply();
-                        else if(this.axiom[i] == "X")
+                          primitive.display();
+                        }
+                        else if(this.axiom[i] == "X"){
                           this.scene.leavesTxt.apply();
-                        primitive.display();
+                          this.scene.pushMatrix();
+                          this.scene.scale(2, 1, 2);
+                          primitive.display();
+                          this.scene.popMatrix();
+                        }
                         this.scene.translate(0, 1, 0);
                     }
                     break;
