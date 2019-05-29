@@ -34,6 +34,8 @@ class MyScene extends CGFscene {
         this.branches = [];
         this.n_branches = 6;
         this.branch = new MyTreeBranch(this);
+        this.nest = new MyNest(this, 20, 4);
+        this.house = new MyHouse(this);
         
         for(var i = 0; i < this.n_trees; i++){ //get vector values
           this.tree_axioms.push(this.tree.axiom);
@@ -181,8 +183,21 @@ class MyScene extends CGFscene {
         
         // ---- BEGIN Primitive drawing section
         
+
         this.bird.display();
         
+        this.pushMatrix();
+        this.translate(-14,4.6,0.5);
+        this.nest.display();
+        this.popMatrix();
+
+        this.pushMatrix();
+        this.translate(-6.5,4.5,12);
+        this.scale(0.25,0.25,0.25);
+        this.rotate(Math.PI, 0,1,0);
+        this.house.display();
+        this.popMatrix();
+
         this.lightning.display();
         
         for(var i = 0; i < this.n_trees; i++){
