@@ -8,12 +8,13 @@ class MyBird extends CGFobject {
     super(scene);
     
     this.scaleFactor = 1;
+    this.speedFactor = 1.0;
+    
     this.heightVar = 0.0;
     this.ang = 0.0;
     this.wingAng = Math.PI/2;
     this.normals = []; 
     this.speed = 0.0;
-    this.speedFactor = 1.0;
     this.x = 0.0;
     this.y = 12.0;
     this.z = 0.0;
@@ -120,9 +121,8 @@ class MyBird extends CGFobject {
       this.ang += 2 * (Math.PI/2 - this.ang % (Math.PI / 2));
     }
   }
-  startPickUp(t){
+  startPickUp(){
     if(this.pickUp) return;
-    this.startT = t;
     this.pickUp = true;
     this.down = true;
   }
@@ -136,7 +136,7 @@ class MyBird extends CGFobject {
     if(x_dif > -1.5 && x_dif < 1.5 && z_dif < 1.5 && z_dif > -1.5)
       return;
 
-    for(var i = 0; i < this.scene.n_branches; i++){
+    for(var i = 0; i < this.scene.n_branches && this.branch == 0; i++){
       x_dif = this.x - this.scene.branches[i].x;
       z_dif = this.z - this.scene.branches[i].z;
       if(x_dif > -1 && x_dif < 1 && z_dif < 1 && z_dif > 0){
@@ -153,6 +153,7 @@ class MyBird extends CGFobject {
     x_dif = this.x + 14;
     z_dif = this.z - 0.5;
     if(x_dif > -1.5 && x_dif < 1.5 && z_dif < 1.5 && z_dif > -1.5){
+      this.branch.y = 4.9;
       this.scene.branches[this.branch_index] = this.branch;
       this.branch = 0;
     }
@@ -162,17 +163,16 @@ class MyBird extends CGFobject {
     this.scene.pushMatrix();
     
     
-    this.scene.translate(0, this.heightVar + this.y, 0);
-
     if(this.branch != 0){
       this.branch.x = this.x;
+      this.branch.y = this.y + this.heightVar - 0.25;
       this.branch.z = this.z - 0.75;
       this.branch.display();
     }
 
     this.scene.setDefaultAppearance();
 
-    this.scene.translate(this.x, 0, this.z);
+    this.scene.translate(this.x, this.heightVar + this.y, this.z);
     this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
     this.scene.rotate(this.ang, 0, 1, 0);
     this.scene.rotate(Math.PI / 2, 1, 0, 0);

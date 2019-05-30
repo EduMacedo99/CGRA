@@ -14,7 +14,8 @@ class MyLightning extends CGFobject {
         // cria as producoes
         this.productions={
           "F": [ "FF" ],
-          "X": ["F[-X][X]F[-X]+FX"]                  
+          // "X": ["F[-X][X]F[-X]+FX"] 
+          "X": ["F[-X][X]F[-X]+FX", "F[/X][X]F[\\X]+X", "F[^X][X]F[&X]^X" ]                                   
         };
 
         // angulo de rotacao 25
@@ -26,10 +27,9 @@ class MyLightning extends CGFobject {
         // escalamento dos elementos dependente do numero de iteracoes
         this.scale = Math.pow(0.5, this.iterations-1);
         
-        this.light = new CGFlight(this.scene, 1);
-        this.light.setSpecular(1.0, 1.0, 1.0, 1.0);
-        this.light.setAmbient(0.5, 0.5, 0.5, 1.0);
-        this.light.setDiffuse(0.8, 0.8, 0.8, 1.0);
+        this.scene.lights[1].setSpecular(1.0, 1.0, 1.0, 1.0);
+        this.scene.lights[1].setAmbient(0.5, 0.5, 0.5, 1.0);
+        this.scene.lights[1].setDiffuse(0.8, 0.8, 0.8, 1.0);
     }
 
     init(){
@@ -82,20 +82,20 @@ class MyLightning extends CGFobject {
       this.z = 13 - (Math.random() * 10000) % 26;
 
       //iluminar
-      this.light.setPosition(this.x, 15.1, this.z);
-      this.light.enable();
-      this.light.update();
+      this.scene.lights[1].setPosition(this.x, 15.1, this.z);
+      this.scene.lights[1].enable();
+      this.scene.lights[1].update();
     }
     update(t){
       this.depth = this.axiom.length * (t - this.startT) / 1000;
       if((t - this.startT) >= 1000 && !this.end) {
-        this.light.disable();
-        this.light.update();
+        this.scene.lights[1].disable();
+        this.scene.lights[1].update();
         this.end = true;
       }
     }
     display(){
-        this.light.update();
+        this.scene.lights[1].update();
         this.scene.pushMatrix();
         this.scene.translate(this.x, 15, this.z);
         this.scene.rotate(Math.PI, 0, 0, 1);

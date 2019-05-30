@@ -18,6 +18,7 @@ class MyInterface extends CGFinterface {
       this.gui.add(this.scene.bird, 'scaleFactor', 0.3, 5.0).name('Scale');
       this.gui.add(this.scene.bird, 'speedFactor', 0.5, 3.0).name('Speed');
       this.gui.add(this.scene, 'thirdPerson').name('Third Person Mode');
+      this.gui.add(this.scene, 'fix').name('Fix Camera');
 
 
       this.initKeys();
