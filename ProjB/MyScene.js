@@ -35,6 +35,7 @@ class MyScene extends CGFscene {
         this.n_branches = 6;
         this.nest = new MyNest(this, 20, 4);
         this.house = new MyHouse(this);
+        this.skyBox = new MyCubeMap(this, 60);
         
         for(var i = 0; i < this.n_trees; i++){ //get vector values
           this.tree_axioms.push(this.tree.axiom);
@@ -50,7 +51,8 @@ class MyScene extends CGFscene {
         //Objects connected to MyInterface
         this.thirdPerson = false;
         this.fix = function (){
-          this.fixCamera();
+          var norm2 = Math.sqrt(20*20+32*32);
+          this.camera.direction = vec4.fromValues(Math.sin(this.bird.ang)*32/norm2, -20/norm2, Math.cos(this.bird.ang)*32/norm2, 0);
         };
 
         //Shaders
@@ -96,15 +98,25 @@ class MyScene extends CGFscene {
         this.lightningTxt.setDiffuse(1, 1, 1, 1.0);
         this.lightningTxt.setShininess(150.0);
     
+        this.skyboxTxt = new CGFappearance(this);
+        this.skyboxTxt.setAmbient(1, 1, 1, 1);
+        this.skyboxTxt.setDiffuse(1, 1, 1, 1);
+        this.skyboxTxt.setSpecular(0, 0, 0, 1);
+        this.skyboxTxt.setShininess(150.0);
+        this.skyboxTxt.loadTexture('images/skybox_night.png');
+        this.skyboxTxt.setTextureWrap('REPEAT', 'REPEAT');    
     }
     initLights() {
-        this.lights[0].setPosition(15, 2, 5, 1);
-        this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
+        this.lights[0].setPosition(30, 35, 0, 1);
+        this.lights[0].setDiffuse(0.5, 0.5, 0.7, 1.0);
+        this.lights[0].setAmbient(0.4, 0.4, 0.6, 1);
+        this.lights[0].setSpecular(0.5, 0.5, 0.7, 1.0);
         this.lights[0].enable();
         this.lights[0].update();
     }
     initCameras() {
       this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(40, 80, 40), vec3.fromValues(0, 0, 0));
+      this.cameraBird = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(40, 80, 40), vec3.fromValues(0, 0, 0));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -160,18 +172,12 @@ class MyScene extends CGFscene {
       this.bird.update(t);
       this.lightning.update(t);
     }
-    fixCamera(){
-      var norm2 = Math.sqrt(20*20+32*32);
-      this.camera.direction = vec4.fromValues(Math.sin(this.bird.ang)*32/norm2, -20/norm2, Math.cos(this.bird.ang)*32/norm2, 0);
-      console.log(vec4.fromValues(Math.sin(this.bird.ang)*32/norm2, -20/norm2, Math.cos(this.bird.ang)*32/norm2, 0))
-    }
-
     display() {
       if(this.thirdPerson){ //third person settings
-        this.camera.setPosition([this.bird.x - 32 * Math.sin(this.bird.ang), this.bird.y+20, this.bird.z - 32*Math.cos(this.bird.ang)]);
-        this.camera.setTarget([this.bird.x, this.bird.y, this.bird.z]);
+        this.cameraBird.setPosition([this.bird.x - 32 * Math.sin(this.bird.ang), this.bird.y+20, this.bird.z - 32*Math.cos(this.bird.ang)]);
+        this.cameraBird.setTarget([this.bird.x, this.bird.y, this.bird.z]);
       }
-      console.log(this.camera.calculateDirection());
+      else
 
       this.terrainAlt.bind(1);
       this.terrainMap.bind(2);
@@ -236,6 +242,12 @@ class MyScene extends CGFscene {
           if(this.branches[i] != 0)
             this.branches[i].display();
         }
+
+        this.pushMatrix();
+        this.translate(0, 29.1, 0);
+        this.skyboxTxt.apply();
+        this.skyBox.display();
+        this.popMatrix();
         // ---- END Primitive drawing section
     }
 }
