@@ -10,6 +10,7 @@ class MyLegs extends CGFobject {
     this.normals = []; 
     this.cylinder = new MyCylinder(this.scene, 6,0.65,0.10);
     this.fingers = new MyFingers(this.scene);
+    this.ang = -Math.PI/9;
 
   }
   display(){
@@ -17,19 +18,20 @@ class MyLegs extends CGFobject {
 
     this.scene.pushMatrix();
 
-    this.scene.translate(0.05,-0.05,0.05);
-    this.scene.rotate(-Math.PI/9, 1,0,0);
-    this.scene.rotate(Math.PI/9, 0,0,1);
+    this.scene.rotate(this.ang, 1,0,0);
+    this.scene.translate(0.0,-.65,0.05);
     this.cylinder.display();
+
 
     this.scene.popMatrix();
 
+    this.scene.translate(0.0,-.5, 0.23);
 
     this.scene.rotate(Math.PI/2, 1,0,0);
     this.fingers.display();
-    this.scene.rotate(-Math.PI/4, 0,0,1);
+    this.scene.rotate(-Math.PI/8, 0,0,1);
     this.fingers.display();
-    this.scene.rotate(-Math.PI/4, 0,0,1);
+    this.scene.rotate(2*Math.PI/8, 0,0,1);
     this.fingers.display();
 
 

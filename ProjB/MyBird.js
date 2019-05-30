@@ -28,6 +28,7 @@ class MyBird extends CGFobject {
     this.pyramid = new MyPyramid(this.scene, 6, 0.2, 0.25/4);
     this.eyes = new MyPyramid(this.scene, 4, 0.08, 0.1);
     this.wings = new MyWing(this.scene);
+    this.legs = new MyLegs(this.scene);
     this.branch = 0;
     this.branch_index = 0;
     
@@ -172,9 +173,21 @@ class MyBird extends CGFobject {
 
     this.scene.setDefaultAppearance();
 
+    // this.scene.translate(this.x,  this.y, this.z);
     this.scene.translate(this.x, this.heightVar + this.y, this.z);
     this.scene.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
     this.scene.rotate(this.ang, 0, 1, 0);
+
+    this.scene.pushMatrix();
+    this.scene.translate(0.1,-0.15,0);
+    this.scene.scale(0.3,0.3,0.3);
+    this.scene.rotate(Math.PI/2, 1, 0, 0);
+    this.legs.display();
+
+    // this.translate(-0.1)
+    this.legs.display();
+    this.scene.popMatrix();
+
     this.scene.rotate(Math.PI / 2, 1, 0, 0);
 
 
@@ -212,8 +225,7 @@ class MyBird extends CGFobject {
     this.scene.popMatrix();
     
     this.scene.popMatrix();
-    
-    
+        
     this.scene.popMatrix();
     
   }

@@ -8,7 +8,7 @@ class MyScene extends CGFscene {
     }
     init(application) {
         super.init(application);
-        this.initCameras();
+        //this.initCameras();
         this.initLights();
         this.updatePeriod = 25;
 
@@ -36,6 +36,7 @@ class MyScene extends CGFscene {
         this.nest = new MyNest(this, 20, 4);
         this.house = new MyHouse(this);
         this.skyBox = new MyCubeMap(this, 60);
+        this.legs = new MyLegs(this);
         
         for(var i = 0; i < this.n_trees; i++){ //get vector values
           this.tree_axioms.push(this.tree.axiom);
@@ -59,6 +60,7 @@ class MyScene extends CGFscene {
         this.terrainShader = new CGFshader(this.gl, "shaders/terrain.vert", "shaders/terrain.frag");
         this.terrainShader.setUniformsValues({ uSampler2: 1, uSampler3: 2, normScale: 60.0 });
     
+        this.initCameras();
         this.initMaterials();
     }
     initMaterials(){
@@ -67,6 +69,7 @@ class MyScene extends CGFscene {
         this.terrain = new CGFtexture(this, "images/terrain.jpg");
         this.terrainAp = new CGFappearance(this);
         this.terrainAp.setTexture(this.terrain);
+        this.terrainAp.setTextureWrap('WRAP', 'WRAP');    
 
         this.branchTxt = new CGFappearance(this);
         this.branchTxt.setAmbient(0.5, 0.5, 0.5, 1.0);
@@ -115,6 +118,7 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
+      // this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(2, 20, 2), vec3.fromValues(this.bird.x, this.bird.y, this.bird.z));
       this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(40, 80, 40), vec3.fromValues(0, 0, 0));
       this.cameraBird = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(40, 80, 40), vec3.fromValues(0, 0, 0));
     }
@@ -174,8 +178,8 @@ class MyScene extends CGFscene {
     }
     display() {
       if(this.thirdPerson){ //third person settings
-        this.cameraBird.setPosition([this.bird.x - 32 * Math.sin(this.bird.ang), this.bird.y+20, this.bird.z - 32*Math.cos(this.bird.ang)]);
-        this.cameraBird.setTarget([this.bird.x, this.bird.y, this.bird.z]);
+        this.camera.setPosition([this.bird.x - 32 * Math.sin(this.bird.ang), this.bird.y+20, this.bird.z - 32*Math.cos(this.bird.ang)]);
+        this.camera.setTarget([this.bird.x, this.bird.y, this.bird.z]);
       }
       else
 
@@ -202,7 +206,7 @@ class MyScene extends CGFscene {
         
         // ---- BEGIN Primitive drawing section
         this.bird.display();
-        
+        // this.legs.display();
         this.pushMatrix();
         this.translate(-14,4.7,0.5);
         this.nest.display();
