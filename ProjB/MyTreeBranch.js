@@ -4,10 +4,11 @@
  * @param scene - Reference to MyScene object
  */
 class MyTreeBranch extends CGFobject {
-	constructor(scene, x = 0, z = 0) {
+	constructor(scene, x = 0, z = 0, y = 0) {
     super(scene);
     
     this.x = x;
+    this.y = y;
     this.z = z;
     this.normals = []; 
 
@@ -19,7 +20,7 @@ class MyTreeBranch extends CGFobject {
     this.scene.branchTxt.apply();
 
     this.scene.pushMatrix();
-    this.scene.translate(this.x, 0, this.z);
+    this.scene.translate(this.x, this.y, this.z);
     this.scene.rotate(Math.PI/2, 1, 0, 0);
     this.scene.scale(0.25, 1.5, 0.25);
     this.branch.display();

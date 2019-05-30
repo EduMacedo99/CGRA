@@ -44,11 +44,14 @@ class MyScene extends CGFscene {
 
         for(var i = 0; i < this.n_branches; i++){
           var rand = Math.random();
-          this.branches.push(new MyTreeBranch(this, (rand * 100) % 10, 9 - (rand * 10000) % 18));
+          this.branches.push(new MyTreeBranch(this, (rand * 100) % 10, 9 - (rand * 10000) % 18, 4.7));
         }
 
         //Objects connected to MyInterface
         this.thirdPerson = false;
+        this.fix = function (){
+          this.fixCamera();
+        };
 
         //Shaders
         this.terrainShader = new CGFshader(this.gl, "shaders/terrain.vert", "shaders/terrain.frag");
@@ -157,13 +160,18 @@ class MyScene extends CGFscene {
       this.bird.update(t);
       this.lightning.update(t);
     }
+    fixCamera(){
+      var norm2 = Math.sqrt(20*20+32*32);
+      this.camera.direction = vec4.fromValues(Math.sin(this.bird.ang)*32/norm2, -20/norm2, Math.cos(this.bird.ang)*32/norm2, 0);
+      console.log(vec4.fromValues(Math.sin(this.bird.ang)*32/norm2, -20/norm2, Math.cos(this.bird.ang)*32/norm2, 0))
+    }
 
     display() {
       if(this.thirdPerson){ //third person settings
-        this.camera.setPosition([this.bird.x, this.bird.y+20, this.bird.z-32]);
+        this.camera.setPosition([this.bird.x - 32 * Math.sin(this.bird.ang), this.bird.y+20, this.bird.z - 32*Math.cos(this.bird.ang)]);
         this.camera.setTarget([this.bird.x, this.bird.y, this.bird.z]);
-        this.camera.orbit([0, 1, 0], this.bird.ang);
       }
+      console.log(this.camera.calculateDirection());
 
       this.terrainAlt.bind(1);
       this.terrainMap.bind(2);
@@ -213,7 +221,9 @@ class MyScene extends CGFscene {
           this.translate(0, 0, 4);
         }
         this.popMatrix();
-        
+
+        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
+
         this.setActiveShader(this.terrainShader);
         this.terrainAp.apply();
         this.pushMatrix();
@@ -222,13 +232,10 @@ class MyScene extends CGFscene {
         this.popMatrix();
         this.setActiveShader(this.defaultShader);
 
-        this.pushMatrix();
-        this.translate(0, 4.7, 0);
         for(var i = 0; i < this.n_branches; i++){
           if(this.branches[i] != 0)
             this.branches[i].display();
         }
-        this.popMatrix();
         // ---- END Primitive drawing section
     }
 }
