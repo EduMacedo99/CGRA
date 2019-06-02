@@ -156,12 +156,14 @@ class MyLightning extends CGFobject {
 
                     if ( primitive  && depth > 0)
                     {           
-                        this.scene.pushMatrix();  
-                        this.scene.scale(0.25, 2, 1);
-                        this.scene.translate(0.5, 0.5, 0);
-                        primitive.display();
-                        this.scene.popMatrix();
-                        this.scene.translate(0, 2, 0);
+                      this.scene.pushMatrix();  
+                      this.scene.scale(0.25, 2, 1);
+                      this.scene.translate(0.5, 0.5, 0);
+                      primitive.display();
+                      this.scene.rotate(Math.PI, 0, 1, 0);
+                      primitive.display();
+                      this.scene.popMatrix();
+                      this.scene.translate(0, 2, 0);
                         depth--;
                     }
                     break;
