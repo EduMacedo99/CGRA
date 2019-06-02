@@ -10,7 +10,6 @@ class MyScene extends CGFscene {
         super.init(application);
         //this.initCameras();
         this.initLights();
-        this.updatePeriod = 25;
 
         // Background color
         this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -20,7 +19,7 @@ class MyScene extends CGFscene {
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
         this.enableTextures(true);
-        this.setUpdatePeriod(this.updatePeriod);
+        this.setUpdatePeriod(25);
         
         //Initialize scene objects
         this.axis = new CGFaxis(this);
@@ -46,15 +45,11 @@ class MyScene extends CGFscene {
 
         for(var i = 0; i < this.n_branches; i++){
           var rand = Math.random();
-          this.branches.push(new MyTreeBranch(this, (rand * 100) % 10, 9 - (rand * 10000) % 18, 4.7));
+          this.branches.push(new MyTreeBranch(this, (rand * 100) % 10, 9 - (rand * 10000) % 18, 4.7, rand * Math.PI));
         }
 
         //Objects connected to MyInterface
         this.thirdPerson = false;
-        this.fix = function (){
-          var norm2 = Math.sqrt(20*20+32*32);
-          this.camera.direction = vec4.fromValues(Math.sin(this.bird.ang)*32/norm2, -20/norm2, Math.cos(this.bird.ang)*32/norm2, 0);
-        };
 
         //Shaders
         this.terrainShader = new CGFshader(this.gl, "shaders/terrain.vert", "shaders/terrain.frag");
@@ -150,7 +145,6 @@ class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-      // this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(2, 20, 2), vec3.fromValues(this.bird.x, this.bird.y, this.bird.z));
       this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(40, 80, 40), vec3.fromValues(0, 5, 0));
     }
     setDefaultAppearance() {

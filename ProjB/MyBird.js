@@ -40,12 +40,12 @@ class MyBird extends CGFobject {
     
     if(this.invert){
       this.heightVar -= ((t - this.t) % 1000) / 2000;
-      this.wingAng -= (this.speed/15*this.speedFactor + 1) * (((t - this.t) % 1000) / 1000) * Math.PI/2;
+      this.wingAng -= (this.speed/15*this.speedFactor + 1) * (((t - this.t) % 1000) / 1000) * Math.PI/2 * this.speedFactor;
       if(this.wingAng <= 0) this.invert = false;
     }
     else{
       this.heightVar += ((t - this.t) % 1000) / 2000;
-      this.wingAng += (this.speed/15*this.speedFactor + 1) * (((t - this.t) % 1000) / 1000 ) * Math.PI/2;
+      this.wingAng += (this.speed/15*this.speedFactor + 1) * (((t - this.t) % 1000) / 1000 ) * Math.PI/2 * this.speedFactor;
       if(this.wingAng >= (Math.PI/2)) this.invert = true;
     }
 
@@ -140,7 +140,7 @@ class MyBird extends CGFobject {
     for(var i = 0; i < this.scene.n_branches && this.branch == 0; i++){
       x_dif = this.x - this.scene.branches[i].x;
       z_dif = this.z - this.scene.branches[i].z;
-      if(x_dif > -1 && x_dif < 1 && z_dif < 1 && z_dif > 0){
+      if(x_dif > -2 && x_dif < 2 && z_dif < 2 && z_dif > -2){
         this.branch = this.scene.branches[i];
         this.scene.branches[i] = 0;
         this.branch_index = i;
@@ -153,7 +153,7 @@ class MyBird extends CGFobject {
 
     x_dif = this.x + 14;
     z_dif = this.z - 0.5;
-    if(x_dif > -1.5 && x_dif < 1.5 && z_dif < 1.5 && z_dif > -1.5){
+    if(x_dif > -2 && x_dif < 2 && z_dif < 2 && z_dif > -2){
       this.scene.nest.addBranch(this.branch);
       this.branch = 0;
     }
