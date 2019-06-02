@@ -10,9 +10,16 @@ class MyNest extends CGFobject {
     this.height = height;
     
     this.normals = []; 
+    this.branches = [];
     this.branch = new MyTreeBranch(this.scene);
     
 
+  }
+  addBranch(branch){
+    branch.x = Math.random() - 0.5;
+    branch.y = 0.2;
+    branch.z = Math.random() - 0.5;
+    this.branches.push(branch);
   }
   display(){
 var angle = Math.asin((2*Math.PI*Math.SQRT2)/(this.n_branches));
@@ -31,6 +38,10 @@ var angle = Math.asin((2*Math.PI*Math.SQRT2)/(this.n_branches));
         this.scene.translate(-0.5,0,0.5);
         this.branch.display();
         this.scene.popMatrix();
+    }
+
+    for(var i = 0; i < this.branches.length; i++){
+      this.branches[i].display();
     }
   }
   enableNormalViz(){

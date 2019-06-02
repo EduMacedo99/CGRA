@@ -154,8 +154,7 @@ class MyBird extends CGFobject {
     x_dif = this.x + 14;
     z_dif = this.z - 0.5;
     if(x_dif > -1.5 && x_dif < 1.5 && z_dif < 1.5 && z_dif > -1.5){
-      this.branch.y = 4.9;
-      this.scene.branches[this.branch_index] = this.branch;
+      this.scene.nest.addBranch(this.branch);
       this.branch = 0;
     }
   }
@@ -184,7 +183,7 @@ class MyBird extends CGFobject {
     this.scene.rotate(Math.PI/2, 1, 0, 0);
     this.legs.display();
 
-    // this.translate(-0.1)
+    this.scene.translate(-0.6, 0, 0);
     this.legs.display();
     this.scene.popMatrix();
 
