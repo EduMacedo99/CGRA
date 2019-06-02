@@ -164,9 +164,10 @@ class MyBird extends CGFobject {
     
     
     if(this.branch != 0){
-      this.branch.x = this.x;
-      this.branch.y = this.y + this.heightVar - 0.25;
-      this.branch.z = this.z - 0.75;
+      this.branch.ang = this.ang + Math.PI/2;
+      this.branch.x = this.x - 0.2 * this.scaleFactor * Math.sin(this.ang) - 0.75 * Math.cos(this.ang);
+      this.branch.y = this.y + this.heightVar - 0.3 * this.scaleFactor;
+      this.branch.z = this.z + 0.75 * Math.sin(this.ang) + 0.2 * this.scaleFactor * Math.cos(this.ang);
       this.branch.display();
     }
 
@@ -191,6 +192,7 @@ class MyBird extends CGFobject {
 
 
     this.scene.pushMatrix();
+    this.scene.wingTxt.apply();
     this.cylinder.display();
     
     this.scene.pushMatrix();
@@ -202,8 +204,20 @@ class MyBird extends CGFobject {
     
     this.scene.translate(0,0.6,0);
     this.coneHead.display();
+
+    this.scene.pushMatrix();
+    this.scene.eyeTxt.apply();
+    this.scene.rotate(-Math.PI/5, 1, 0, 0);
+    this.scene.translate(0.05, 0.15, -0.1);
+    this.scene.scale(0.5, 0.5, 0.5);
+    this.eyes.display();
+
+    this.scene.translate(-0.2, 0, 0);
+    this.eyes.display();
+    this.scene.popMatrix();
     
     this.scene.translate(0,0.4*0.75,0); 
+    this.scene.beakTxt.apply();
     this.pyramid.display();   
 
     this.scene.popMatrix();

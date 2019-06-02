@@ -20,6 +20,7 @@ class MyLegs extends CGFobject {
 
     this.scene.rotate(this.ang, 1,0,0);
     this.scene.translate(0.0,-.65,0.05);
+    this.scene.fingerTxt.apply();
     this.cylinder.display();
 
 

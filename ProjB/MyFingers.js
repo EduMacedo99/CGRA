@@ -14,8 +14,10 @@ class MyFingers extends CGFobject {
   }
   display(){
     this.scene.pushMatrix();
+    this.scene.fingerTxt.apply();
     this.cylinder.display();
     this.scene.translate(0,0.50,0);
+    this.scene.nailTxt.apply();
     this.cone.display();
     this.scene.popMatrix();
   }

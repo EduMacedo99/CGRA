@@ -101,25 +101,57 @@ class MyScene extends CGFscene {
         this.lightningTxt.setDiffuse(1, 1, 1, 1.0);
         this.lightningTxt.setShininess(150.0);
     
+        this.fingerTxt = new CGFappearance(this);
+        this.fingerTxt.setAmbient(0.5, 0.3, 0, 1.0);
+        this.fingerTxt.setSpecular(1, 0.8, 0, 1.0);
+        this.fingerTxt.setDiffuse(1, 0.8, 0, 1.0);
+        this.fingerTxt.setShininess(10.0);
+    
+        this.nailTxt = new CGFappearance(this);
+        this.nailTxt.setAmbient(0.5, 0.5, 0, 1.0);
+        this.nailTxt.setSpecular(1, 1, 0, 1.0);
+        this.nailTxt.setDiffuse(1, 1, 0, 1.0);
+        this.nailTxt.setShininess(10.0);
+    
+        this.beakTxt = new CGFappearance(this);
+        this.beakTxt.setAmbient(0.5, 0.3, 0, 1.0);
+        this.beakTxt.setSpecular(1, 0.8, 0, 1.0);
+        this.beakTxt.setDiffuse(1, 0.8, 0, 1.0);
+        this.beakTxt.setShininess(10.0);
+
+        this.eyeTxt = new CGFappearance(this);
+        this.eyeTxt.setAmbient(0.3, 0.3, 0.8, 1.0);
+        this.eyeTxt.setSpecular(0.3, 0.3, 0.8, 1.0);
+        this.eyeTxt.setDiffuse(0.3, 0.3, 0.8, 1.0);
+        this.eyeTxt.setShininess(10.0);
+
+        this.wingTxt = new CGFappearance(this);
+        this.wingTxt.setAmbient(0.5, 0.5, 0.8, 1.0);
+        this.wingTxt.setSpecular(0.8, 0.8, 0.8, 1.0);
+        this.wingTxt.setDiffuse(0.8, 0.8, 0.8, 1.0);
+        this.wingTxt.setShininess(10.0);
+        this.wingTxt.loadTexture('images/feathers.jpg');
+        this.wingTxt.setTextureWrap('REPEAT', 'REPEAT');    
+    
         this.skyboxTxt = new CGFappearance(this);
         this.skyboxTxt.setAmbient(1, 1, 1, 1);
         this.skyboxTxt.setDiffuse(1, 1, 1, 1);
         this.skyboxTxt.setSpecular(0, 0, 0, 1);
         this.skyboxTxt.setShininess(150.0);
-        this.skyboxTxt.loadTexture('images/skybox_night.png');
+        this.skyboxTxt.loadTexture('images/skybox_day.png');
         this.skyboxTxt.setTextureWrap('REPEAT', 'REPEAT');    
     }
     initLights() {
-        this.lights[0].setPosition(30, 35, 0, 1);
-        this.lights[0].setDiffuse(0.5, 0.5, 0.7, 1.0);
-        this.lights[0].setAmbient(0.4, 0.4, 0.6, 1);
-        this.lights[0].setSpecular(0.5, 0.5, 0.7, 1.0);
+        this.lights[0].setPosition(30, 35, -20, 1);
+        this.lights[0].setDiffuse(1, 1, 1, 1.0);
+        this.lights[0].setAmbient(1, 1, 1, 1);
+        this.lights[0].setSpecular(1, 1, 1, 1.0);
         this.lights[0].enable();
         this.lights[0].update();
     }
     initCameras() {
-      this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(2, 20, 2), vec3.fromValues(this.bird.x, this.bird.y, this.bird.z));
-      // this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(40, 80, 40), vec3.fromValues(0, 0, 0));
+      // this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(2, 20, 2), vec3.fromValues(this.bird.x, this.bird.y, this.bird.z));
+      this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(40, 80, 40), vec3.fromValues(0, 5, 0));
     }
     setDefaultAppearance() {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
